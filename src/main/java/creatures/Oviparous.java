@@ -1,4 +1,4 @@
-package Creature;
+package creatures;
 
 public class Oviparous extends Creature{
 

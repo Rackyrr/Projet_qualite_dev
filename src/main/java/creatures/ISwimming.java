@@ -1,4 +1,4 @@
-package Creature;
+package creatures;
 
 public interface ISwimming {
 }
