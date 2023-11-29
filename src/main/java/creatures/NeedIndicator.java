@@ -4,6 +4,8 @@ public abstract class NeedIndicator {
     private int maxValue;
     private int actualValue;
 
+    public abstract boolean getState();
+
     public int getMaxValue() {
         return maxValue;
     }

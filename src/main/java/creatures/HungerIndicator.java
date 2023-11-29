@@ -10,8 +10,8 @@ public class HungerIndicator extends NeedIndicator{
         super(maxValue);
         this.hungerRate = hungerRate;
     }
-
-    public boolean getHungerState() {
+    @Override
+    public boolean getState() {
         return this.getActualValue() <= this.getMaxValue()/2;
     }
 
