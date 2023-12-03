@@ -4,6 +4,14 @@ public class Disease {
     private String name;
     private boolean cureItself;
     private int naturalHealingTime;
+    private int damageToHealth;
+
+    public Disease(String name, boolean cureItself, int naturalHealingTime, int damageToHealth) {
+        this.name = name;
+        this.cureItself = cureItself;
+        this.naturalHealingTime = naturalHealingTime;
+        this.damageToHealth = damageToHealth;
+    }
 
     public Disease(String name, boolean cureItself, int naturalHealingTime) {
         this.name = name;
@@ -33,5 +41,13 @@ public class Disease {
 
     public void setNaturalHealingTime(int naturalHealingTime) {
         this.naturalHealingTime = naturalHealingTime;
+    }
+
+    public int getDamageToHealth() {
+        return damageToHealth;
+    }
+
+    public void setDamageToHealth(int damageToHealth) {
+        this.damageToHealth = damageToHealth;
     }
 }

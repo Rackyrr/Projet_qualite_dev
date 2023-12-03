@@ -3,7 +3,7 @@ package models.creatures.indicators;
 import models.items.Food;
 
 public class HungerIndicator extends NeedIndicator{
-    private int hungerRate;
+    private double hungerRate;
     private boolean starvedState = false;
 
     public HungerIndicator(int maxValue, int hungerRate) {
@@ -15,11 +15,11 @@ public class HungerIndicator extends NeedIndicator{
         return this.getActualValue() <= this.getMaxValue()/2;
     }
 
-    public int getHungerRate() {
+    public double getHungerRate() {
         return hungerRate;
     }
 
-    public void setHungerRate(int hungerRate) {
+    public void setHungerRate(double hungerRate) {
         this.hungerRate = hungerRate;
     }
 
@@ -30,7 +30,7 @@ public class HungerIndicator extends NeedIndicator{
     public void setStarvedState(boolean starvedState) {
         this.starvedState = starvedState;
     }
-
+    @Override
     public void refresh(){
         boolean isStarved = (this.getActualValue() == 0);
         if (isStarved)

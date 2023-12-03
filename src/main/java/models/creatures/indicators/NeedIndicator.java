@@ -1,24 +1,26 @@
 package models.creatures.indicators;
 
 public abstract class NeedIndicator {
-    private int maxValue;
-    private int actualValue;
+    private double maxValue;
+    private double actualValue;
 
     public abstract boolean getState();
 
-    public int getMaxValue() {
+    public abstract void refresh();
+
+    public double getMaxValue() {
         return maxValue;
     }
 
-    public void setMaxValue(int maxValue) {
+    public void setMaxValue(double maxValue) {
         this.maxValue = maxValue;
     }
 
-    public int getActualValue() {
+    public double getActualValue() {
         return actualValue;
     }
 
-    public void setActualValue(int actualValue) {
+    public void setActualValue(double actualValue) {
         this.actualValue = actualValue;
     }
 
@@ -27,11 +29,11 @@ public abstract class NeedIndicator {
         this.actualValue = MAX_VALUE;
     }
 
-    public void addValue(int amount){
+    public void addValue(double amount){
         this.actualValue = Math.min(actualValue+amount,this.maxValue);
     }
 
-    public void removeValue(int amount){
+    public void removeValue(double amount){
         this.actualValue = Math.max(actualValue-amount,0);
     }
 }

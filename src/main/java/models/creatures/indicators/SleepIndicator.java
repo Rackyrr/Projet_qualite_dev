@@ -1,7 +1,7 @@
 package models.creatures.indicators;
 
 public class SleepIndicator extends NeedIndicator{
-    private int sleepRate;
+    private double sleepRate;
     private boolean state; // sleeping = true
 
     public SleepIndicator(int maxValue, int sleepRate) {
@@ -14,14 +14,14 @@ public class SleepIndicator extends NeedIndicator{
         return this.state;
     }
 
-    public int getSleepRate() {
+    public double getSleepRate() {
         return sleepRate;
     }
 
-    public void setSleepRate(int sleepRate) {
+    public void setSleepRate(double sleepRate) {
         this.sleepRate = sleepRate;
     }
-
+    @Override
     public void refresh(){
         boolean isGonnaSleep = (getActualValue() == 0);
         if (isGonnaSleep) {
