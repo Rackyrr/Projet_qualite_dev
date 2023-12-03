@@ -36,4 +36,8 @@ public abstract class NeedIndicator {
     public void removeValue(double amount){
         this.actualValue = Math.max(actualValue-amount,0);
     }
+
+    public boolean isAtMaxValue(){
+        return getActualValue() == getMaxValue();
+    }
 }

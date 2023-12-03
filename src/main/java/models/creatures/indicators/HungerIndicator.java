@@ -40,8 +40,7 @@ public class HungerIndicator extends NeedIndicator{
     }
 
     public boolean replenish(Food food){
-        boolean isIndicatorAtMaxValue = (this.getActualValue() == this.getMaxValue());
-        if(isIndicatorAtMaxValue)
+        if(isAtMaxValue())
             return false;
         else {
             this.addValue(food.getHungerRestore());

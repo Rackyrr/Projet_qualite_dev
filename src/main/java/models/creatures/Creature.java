@@ -11,6 +11,7 @@ public abstract class Creature {
     private int age;
     private HungerIndicator hunger;
     private SleepIndicator sleep;
+    private HealthIndicator health;
     private boolean sleeping;
     private Gender gender;
     private Enclosure actualEnclosure;
