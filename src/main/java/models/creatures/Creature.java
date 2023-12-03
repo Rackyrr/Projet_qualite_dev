@@ -1,7 +1,8 @@
-package creatures;
+package models.creatures;
 
-import enclosures.Enclosure;
-import items.Food;
+import models.creatures.indicators.*;
+import models.enclosures.Enclosure;
+import models.items.Food;
 
 public abstract class Creature {
     private String name;

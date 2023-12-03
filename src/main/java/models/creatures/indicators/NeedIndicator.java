@@ -1,4 +1,4 @@
-package creatures;
+package models.creatures.indicators;
 
 public abstract class NeedIndicator {
     private int maxValue;

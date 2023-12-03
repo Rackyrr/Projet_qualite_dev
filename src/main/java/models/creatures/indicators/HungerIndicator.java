@@ -1,6 +1,6 @@
-package creatures;
+package models.creatures.indicators;
 
-import items.Food;
+import models.items.Food;
 
 public class HungerIndicator extends NeedIndicator{
     private int hungerRate;

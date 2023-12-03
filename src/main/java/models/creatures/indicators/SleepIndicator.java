@@ -1,4 +1,4 @@
-package creatures;
+package models.creatures.indicators;
 
 public class SleepIndicator extends NeedIndicator{
     private int sleepRate;

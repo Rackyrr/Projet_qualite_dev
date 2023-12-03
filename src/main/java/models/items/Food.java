@@ -1,4 +1,4 @@
-package items;
+package models.items;
 
 public class Food extends Item implements Consumable{
     private int hungerRestore;

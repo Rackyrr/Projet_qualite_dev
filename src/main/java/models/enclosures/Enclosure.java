@@ -1,7 +1,7 @@
-package enclosures;
+package models.enclosures;
 
-import creatures.Creature;
-import creatures.Egg;
+import models.creatures.Creature;
+import models.creatures.Egg;
 
 import java.util.ArrayList;
 
