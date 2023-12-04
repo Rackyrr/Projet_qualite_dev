@@ -4,7 +4,7 @@ import models.creatures.indicators.*;
 import models.enclosures.Enclosure;
 import models.items.Food;
 
-public abstract class Creature {
+public abstract class Creature implements Runnable {
     private String name;
     private int weight;
     private int height;
