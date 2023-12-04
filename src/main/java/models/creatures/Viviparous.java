@@ -1,4 +1,4 @@
 package models.creatures;
 
-public class Viviparous extends Creature{
+public abstract class Viviparous extends Creature{
 }

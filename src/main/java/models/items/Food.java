@@ -1,5 +1,7 @@
 package models.items;
 
+import models.creatures.Creature;
+
 public class Food extends Item implements Consumable{
     private int hungerRestore;
 
@@ -14,5 +16,10 @@ public class Food extends Item implements Consumable{
 
     public void setHungerRestore(int hungerRestore) {
         this.hungerRestore = hungerRestore;
+    }
+
+    @Override
+    public boolean useOn(Creature c) {
+        return c.eat(this);
     }
 }

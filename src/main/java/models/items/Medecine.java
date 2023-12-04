@@ -1,6 +1,6 @@
 package models.items;
 
-import models.creatures.Disease;
+import models.creatures.Creature;
 
 import java.util.List;
 import java.util.Arrays;
@@ -19,5 +19,10 @@ public class Medecine extends Item implements Consumable{
 
     public void setTreatedDiseases(List<String> treatedDiseases) {
         this.treatedDiseases = treatedDiseases;
+    }
+
+    @Override
+    public boolean useOn(Creature c) {
+        return c.getTreated(this);
     }
 }

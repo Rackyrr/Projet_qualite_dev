@@ -1,6 +1,6 @@
 package models.creatures;
 
-public class Oviparous extends Creature{
+public abstract class Oviparous extends Creature{
 
     public void layEgg(){}
 }

@@ -1,5 +1,7 @@
 package models.items;
 
-public interface Consumable {
+import models.creatures.Creature;
 
+public interface Consumable {
+    boolean useOn(Creature c);
 }

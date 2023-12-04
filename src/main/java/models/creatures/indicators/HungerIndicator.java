@@ -32,11 +32,10 @@ public class HungerIndicator extends NeedIndicator{
     }
     @Override
     public void refresh(){
-        boolean isStarved = (this.getActualValue() == 0);
-        if (isStarved)
-            this.starvedState = true;
-        else
+        if(!starvedState) {
             this.removeValue(hungerRate);
+            starvedState = getActualValue() == 0;
+        }
     }
 
     public boolean replenish(Food food){
