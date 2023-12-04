@@ -17,7 +17,14 @@ public class Master {
     }
 
 
-    private void examineEnclosure(Enclosure enclosure){
-
+    private void examineEnclosure(Enclosure enclosure) {
+        // Afficher les caractéristiques de l'enclos et la liste des créatures
+        System.out.println("Caractéristiques de l'enclos:");
+        System.out.println("Nom de l'enclos: " + enclosure.getName());
+        System.out.println("Taille de l'enclos: " + enclosure.getArea());
+        System.out.println("Liste des créatures:");
+        for (Creature creature : enclosure.getCreatures()) {
+            System.out.println(creature.getName() + " - " + creature.getSpecieName());
+        }
     }
 }

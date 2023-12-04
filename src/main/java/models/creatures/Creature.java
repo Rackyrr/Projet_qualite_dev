@@ -17,6 +17,9 @@ public abstract class Creature implements Runnable {
     private boolean sleeping;
     private Gender gender;
     private Enclosure actualEnclosure;
+    public String getName() {
+        return name;
+    }
 
     public boolean use(Consumable c) { return c.useOn(this); }
 
