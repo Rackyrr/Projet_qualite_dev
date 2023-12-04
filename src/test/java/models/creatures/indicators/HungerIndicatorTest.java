@@ -49,19 +49,19 @@ public class HungerIndicatorTest {
     @Test
     void hungerState(){
         HungerIndicator hunger = new HungerIndicator(100,26);
-        assertFalse(hunger.getState());
+        assertFalse(hunger.getState()); // not hungry
         hunger.refresh();
         hunger.refresh();
-        assertTrue(hunger.getState());
+        assertTrue(hunger.getState()); // hungry
     }
 
     @Test
     void starvedState(){
         HungerIndicator hunger = new HungerIndicator(100,51);
-        assertFalse(hunger.getStarvedState());
+        assertFalse(hunger.getStarvedState()); // not starving
         hunger.refresh();
         hunger.refresh();
         assertEquals(hunger.getActualValue(),0);
-        assertTrue(hunger.getStarvedState());
+        assertTrue(hunger.getStarvedState()); // starved
     }
 }

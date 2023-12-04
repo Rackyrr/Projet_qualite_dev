@@ -2,7 +2,7 @@ package models.creatures.indicators;
 
 public class SleepIndicator extends NeedIndicator{
     private double sleepRate;
-    private boolean state; // sleeping = true
+    private boolean state = false; // sleeping = true
 
     public SleepIndicator(int maxValue, int sleepRate) {
         super(maxValue);
@@ -23,15 +23,14 @@ public class SleepIndicator extends NeedIndicator{
     }
     @Override
     public void refresh(){
-        boolean isGonnaSleep = (getActualValue() == 0);
-        if (isGonnaSleep) {
-            state = true;
+        boolean isNotSleeping = !state;
+        if(isNotSleeping){
+            removeValue(sleepRate);
+            state = (getActualValue() == 0); // going to sleep if 0
+        } else {
             addValue(sleepRate);
-            return;
+            boolean isWakingUp = (getActualValue() == getMaxValue()) || ((getActualValue() > getMaxValue()/2) && (Math.random() <= 0.1)); // wakes up randomly when sleep value half full or value full
+            state = !isWakingUp;
         }
-        boolean hasSleptEnough = (getActualValue() > getMaxValue()/2) && state;
-        if (hasSleptEnough)
-            state = false;
-        removeValue(sleepRate);
     }
 }
