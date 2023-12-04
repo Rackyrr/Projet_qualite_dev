@@ -57,4 +57,13 @@ public class HealthIndicatorTest {
         health.treatDisease(med);
         assertFalse(health.hasDisease());
     }
+
+    @Test
+    void death(){
+        HealthIndicator health = new HealthIndicator(100);
+        assertTrue(health.getState());
+        health.setActualDisease(new Disease("Maladie foudroyant",false,0,100));
+        health.refresh();
+        assertFalse(health.getState());
+    }
 }
