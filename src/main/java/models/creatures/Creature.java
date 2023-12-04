@@ -101,5 +101,6 @@ public abstract class Creature implements Runnable {
     public void growUp(){}
     public void die(){}
     public abstract String getSpecieName();
+    public abstract String getCreatureInfo();
 
 }

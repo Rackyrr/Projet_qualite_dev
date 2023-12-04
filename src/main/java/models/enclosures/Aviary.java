@@ -5,7 +5,7 @@ import models.creatures.IFlying;
 
 import java.util.ArrayList;
 
-public class Volarium extends Enclosure {
+public class Aviary extends Enclosure {
     private double Height;
     private CleanlinessLevel CleanLevelRoof;
 
@@ -25,7 +25,7 @@ public class Volarium extends Enclosure {
         CleanLevelRoof = cleanLevelRoof;
     }
 
-    public Volarium(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES, double Height) {
+    public Aviary(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES, double Height) {
         super(AUTHORIZED_ANIMAL, name, area, MAXIMUM_CREATURES);
         this.Height = Height;
         this.setCreatures(new ArrayList<>(this.getMAXIMUM_CREATURES()));
@@ -33,32 +33,42 @@ public class Volarium extends Enclosure {
     }
 
     @Override
-    public void AddCreature(Creature creature){
+    public String toString() {
+        return "La volière " + this.getName() + " a une surface de " + this.getArea() + " m² et une hauteur de "+
+                Height + "m, il y a " + this.getCreatures().size() + this.getAUTHORIZED_ANIMAL().getName() + " et "
+                + this.getEggs().size() + " oeufs";
+    }
+
+    @Override
+    public boolean AddCreature(Creature creature){
         if (IsAuhorizedAnimal(creature) && creature instanceof IFlying){
             if (this.getCreatures().size() < this.getMAXIMUM_CREATURES()){
-            this.getCreatures().add(creature);
+                this.getCreatures().add(creature);
+                return true;
             }
             else {
                 System.out.println("Il n'y a plus de place dans cette volière");
+                return false;
             }
         }
         else {
             System.out.println("Cette créature ne peut pas aller dans cette volière, elle ne serait pas avec son espèce. \n" +
                 "Trouvez une volière qui contient la même espèce que cette créature.");
+            return false;
         }
     }
 
     @Override
     public int CheckCleanlinessLevel(){
-        if (getCLeanlinessLevel().equals(CleanlinessLevel.GREAT)){
+        if (getCleanlinessLevel().equals(CleanlinessLevel.GREAT)){
             System.out.println("La volière est propre, elle n'a pas besoin d'être nettoyée.");
             return 2;
         }
-        else if (getCLeanlinessLevel().equals(CleanlinessLevel.DECENT)){
+        else if (getCleanlinessLevel().equals(CleanlinessLevel.DECENT)){
             System.out.println("La volière n'est pas très sale, mais il faudra la nettoyer dans pas longtemps.");
             return 1;
         }
-        else if (getCLeanlinessLevel().equals(CleanlinessLevel.POOR)){
+        else if (getCleanlinessLevel().equals(CleanlinessLevel.POOR)){
             System.out.println("La volière est très sale, elle a besoin d'être nettoyée.");
             return 0;
         }
@@ -92,7 +102,7 @@ public class Volarium extends Enclosure {
                 System.out.println("La volière est déjà propre, la nettoyer serait inutile.");
             }
             else {
-                setCLeanlinessLevel(CleanlinessLevel.GREAT);
+                setCleanlinessLevel(CleanlinessLevel.GREAT);
                 System.out.println("La volière a été nettoyée, elle est maintenant dans un très bon état.");
             }
             if (CheckCleanlinessLevelOfRoof() == 2){
