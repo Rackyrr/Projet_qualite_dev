@@ -2,21 +2,15 @@ package models.creatures;
 
 public class Disease {
     private String name;
-    private boolean cureItself;
+    private boolean curableByItself;
     private int naturalHealingTime;
     private int damageToHealth;
 
     public Disease(String name, boolean cureItself, int naturalHealingTime, int damageToHealth) {
         this.name = name;
-        this.cureItself = cureItself;
+        this.curableByItself = cureItself;
         this.naturalHealingTime = naturalHealingTime;
         this.damageToHealth = damageToHealth;
-    }
-
-    public Disease(String name, boolean cureItself, int naturalHealingTime) {
-        this.name = name;
-        this.cureItself = cureItself;
-        this.naturalHealingTime = naturalHealingTime;
     }
 
     public String getName() {
@@ -27,12 +21,12 @@ public class Disease {
         this.name = name;
     }
 
-    public boolean isCureItself() {
-        return cureItself;
+    public boolean isCurableByItself() {
+        return curableByItself;
     }
 
-    public void setCureItself(boolean cureItself) {
-        this.cureItself = cureItself;
+    public void setCurableByItself(boolean curableByItself) {
+        this.curableByItself = curableByItself;
     }
 
     public int getNaturalHealingTime() {
