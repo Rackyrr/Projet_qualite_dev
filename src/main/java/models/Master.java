@@ -34,8 +34,19 @@ public class Master {
         System.out.println("Nourrir les créature de l'enclos: " + enclosure.getName());
     }
     private void transferCreature(Enclosure sourceEnclosure, Enclosure destinationEnclosure, Creature creature) {
-        // Logique de transfert de créature d'un enclos à un autre
-        System.out.println("Transferrer la créature " + creature.getName() + " de l'enclos "
-                + sourceEnclosure.getName() + " à l'enclos " + destinationEnclosure.getName());
+        if (destinationEnclosure.getMAXIMUM_CREATURES() > destinationEnclosure.getCreatures().size()) {
+            System.out.println("Transférer la créature " + creature.getName() + " de l'enclos "
+                    + sourceEnclosure.getName() + " à l'enclos " + destinationEnclosure.getName());
+
+            Creature removedCreature = sourceEnclosure.RemoveCreature(creature);
+
+            if (removedCreature != null) {
+                destinationEnclosure.AddCreature(removedCreature);
+            }
+        } else {
+            System.out.println("Impossible de transférer la créature. L'enclos de destination est plein.");
+        }
     }
+
+
 }
