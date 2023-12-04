@@ -3,8 +3,11 @@ package models.creatures.indicators;
 import models.creatures.Disease;
 import models.items.Medecine;
 
+import java.util.Objects;
+
 public class HealthIndicator extends NeedIndicator {
     private Disease actualDisease = null;
+    private int nbOfTurnsWithDisease = 0;
 
     public HealthIndicator(int MAX_VALUE) {
         super(MAX_VALUE);
@@ -19,7 +22,7 @@ public class HealthIndicator extends NeedIndicator {
     }
 
     public boolean hasDisease(){
-        return actualDisease != null;
+        return !Objects.isNull(actualDisease);
     }
 
     @Override
@@ -29,8 +32,14 @@ public class HealthIndicator extends NeedIndicator {
 
     @Override
     public void refresh() {
-        if (hasDisease())
+        if (hasDisease()) {
             removeValue(actualDisease.getDamageToHealth());
+            ++nbOfTurnsWithDisease;
+            if (actualDisease.isCurableByItself() && (nbOfTurnsWithDisease >= actualDisease.getNaturalHealingTime())) {
+                setActualDisease(null);
+                nbOfTurnsWithDisease = 0;
+            }
+        }
     }
 
     public boolean treatDisease(Medecine med){
