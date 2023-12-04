@@ -5,6 +5,7 @@ import models.enclosures.Enclosure;
 import models.items.Consumable;
 import models.items.Food;
 import models.items.Medecine;
+import org.apache.commons.lang3.Range;
 
 public abstract class Creature implements Runnable {
     private String name;
@@ -14,7 +15,7 @@ public abstract class Creature implements Runnable {
     private HungerIndicator hunger;
     private SleepIndicator sleep;
     private HealthIndicator health;
-    private boolean sleeping;
+    private final Range<Integer> NATURAL_DEATH_AGE_INTERVAL;
     private Gender gender;
     private Enclosure actualEnclosure;
     public String getName() {
@@ -73,14 +74,6 @@ public abstract class Creature implements Runnable {
         this.health = health;
     }
 
-    public boolean isSleeping() {
-        return sleeping;
-    }
-
-    public void setSleeping(boolean sleeping) {
-        this.sleeping = sleeping;
-    }
-
     public Gender getGender() {
         return gender;
     }
@@ -105,7 +98,6 @@ public abstract class Creature implements Runnable {
 
     public void shout(){}
 
-    public void wakeUp(){}
     public void growUp(){}
     public void die(){}
     public abstract String getSpecieName();
