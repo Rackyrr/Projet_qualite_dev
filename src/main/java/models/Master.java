@@ -20,7 +20,7 @@ public class Master {
     private void examineEnclosure(Enclosure enclosure) {
         // Afficher les caractéristiques de l'enclos et la liste des créatures
         System.out.println("Caractéristiques de l'enclos:");
-        enclosure.toString();
+        System.out.println(enclosure.toString());
         System.out.println("Liste des créatures:");
         enclosure.getCreaturesInfo();
     }
