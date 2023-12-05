@@ -22,6 +22,11 @@ public class Nymph extends Viviparous implements IRebirth{
     }
 
     @Override
+    public String shout() {
+        return null;
+    }
+
+    @Override
     public void run() {
     }
 }

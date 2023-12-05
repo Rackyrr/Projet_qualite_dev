@@ -22,6 +22,11 @@ public class Unicorn extends Viviparous implements IRunning{
     }
 
     @Override
+    public String shout() {
+        return null;
+    }
+
+    @Override
     public void run() {
 
     }

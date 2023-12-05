@@ -22,6 +22,11 @@ public class Phoenix extends Oviparous implements IFlying, IRebirth{
     }
 
     @Override
+    public String shout() {
+        return null;
+    }
+
+    @Override
     public void run() {
 
     }

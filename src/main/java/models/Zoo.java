@@ -23,14 +23,14 @@ public class Zoo {
         this.enclosurelist = new ArrayList<>();
     }
 
-    public void displayNumberCreature(){
-        int totalCreature = 0;
-        for (Enclosure enclos : numberMaxEnclosure) {
-            System.out.println("Créature dans le Zoo fantastique'" + enclos.getName() + "':");
-            System.out.println();
-        }
-
-    }
+//    public void displayNumberCreature(){
+//        int totalCreature = 0;
+//        for (Enclosure enclos : numberMaxEnclosure) {
+//            System.out.println("Créature dans le Zoo fantastique'" + enclos.getName() + "':");
+//            System.out.println();
+//        }
+//
+//    }
 
     public String getName() {
         return name;

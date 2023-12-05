@@ -20,6 +20,33 @@ public abstract class Creature implements Runnable {
     private Gender gender;
     private Enclosure actualEnclosure;
 
+    public Creature(String name, int weight, int height, int age, HungerIndicator hunger, SleepIndicator sleep, HealthIndicator health, int NATURAL_DEATH_AGE, boolean dead, Gender gender, Enclosure actualEnclosure) {
+        this.name = name;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.hunger = hunger;
+        this.sleep = sleep;
+        this.health = health;
+        this.NATURAL_DEATH_AGE = NATURAL_DEATH_AGE;
+        this.dead = dead;
+        this.gender = gender;
+        this.actualEnclosure = actualEnclosure;
+    }
+
+    public Creature(String name, int weight, int height, int age, double hungerMaxValue, double hungerRate, double sleepMaxValue, double sleepRate, double healthMaxValue, int NATURAL_DEATH_AGE, boolean dead, Gender gender, Enclosure actualEnclosure) {
+        this.name = name;
+        this.weight = weight;
+        this.height = height;
+        this.age = age;
+        this.hunger = new HungerIndicator(hungerMaxValue,hungerRate);
+        this.sleep = new SleepIndicator(sleepMaxValue,sleepRate);
+        this.health = new HealthIndicator(healthMaxValue);
+        this.NATURAL_DEATH_AGE = NATURAL_DEATH_AGE;
+        this.dead = dead;
+        this.gender = gender;
+        this.actualEnclosure = actualEnclosure;
+    }
     public String getName() {
         return name;
     }
@@ -123,10 +150,6 @@ public abstract class Creature implements Runnable {
     public boolean canMateWith(Creature mate){
         return (this.gender == Gender.MALE && mate.gender == Gender.FEMALE) || (this.gender == Gender.FEMALE && mate.gender == Gender.MALE);
     }
-    public abstract boolean reproduce();
-
     public abstract String getSpecieName();
     public abstract String getCreatureInfo();
-
-    public abstract boolean reproduce(Viviparous mate);
 }

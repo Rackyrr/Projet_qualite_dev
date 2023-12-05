@@ -25,4 +25,10 @@ public class Dragon extends Oviparous implements IRunning, IFlying{
     public void run() {
 
     }
+
+    @Override
+    public String shout() {
+        return null;
+    }
+
 }

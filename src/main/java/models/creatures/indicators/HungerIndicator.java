@@ -6,7 +6,7 @@ public class HungerIndicator extends NeedIndicator{
     private double hungerRate;
     private boolean starvedState = false;
 
-    public HungerIndicator(int maxValue, int hungerRate) {
+    public HungerIndicator(double maxValue, double hungerRate) {
         super(maxValue);
         this.hungerRate = hungerRate;
     }

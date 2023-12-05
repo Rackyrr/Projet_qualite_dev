@@ -22,6 +22,11 @@ public class Megalodon extends Oviparous implements ISwimming{
     }
 
     @Override
+    public String shout() {
+        return null;
+    }
+
+    @Override
     public void run() {
 
     }

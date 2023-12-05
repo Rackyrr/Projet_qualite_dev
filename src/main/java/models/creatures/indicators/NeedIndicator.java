@@ -24,7 +24,7 @@ public abstract class NeedIndicator {
         this.actualValue = actualValue;
     }
 
-    public NeedIndicator(int MAX_VALUE) {
+    public NeedIndicator(double MAX_VALUE) {
         this.maxValue = MAX_VALUE;
         this.actualValue = MAX_VALUE;
     }

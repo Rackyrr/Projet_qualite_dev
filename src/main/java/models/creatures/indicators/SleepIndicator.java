@@ -4,7 +4,7 @@ public class SleepIndicator extends NeedIndicator{
     private double sleepRate;
     private boolean state = false; // sleeping = true
 
-    public SleepIndicator(int maxValue, int sleepRate) {
+    public SleepIndicator(double maxValue, double sleepRate) {
         super(maxValue);
         this.sleepRate = sleepRate;
     }

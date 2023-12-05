@@ -2,6 +2,7 @@ package models.enclosures;
 
 import models.creatures.Creature;
 import models.creatures.Egg;
+import models.creatures.Viviparous;
 
 import java.util.ArrayList;
 
@@ -87,6 +88,16 @@ public class Enclosure {
         });
     }
 
+    public int getPregnancyNumber(){
+        int nb = 0;
+        if (AUTHORIZED_ANIMAL.getSuperclass().equals(Viviparous.class)) {
+            for (Creature creature : creatures){
+                Viviparous viviparous = (Viviparous) creature;
+                if (viviparous.isPregnant()) nb += 1;
+            }
+        }
+        return nb;
+    }
     public boolean IsAuhorizedAnimal(Creature creature){
         return AUTHORIZED_ANIMAL.isInstance(creature);
     }
@@ -110,7 +121,7 @@ public class Enclosure {
     }
 
     public boolean isFull() {
-        return creatures.size() + eggs.size() < MAXIMUM_CREATURES;
+        return (creatures.size() + eggs.size() + getPregnancyNumber()) >= MAXIMUM_CREATURES;
     }
 
     public Creature RemoveCreature(Creature creature){

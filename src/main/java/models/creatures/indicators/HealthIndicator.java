@@ -9,7 +9,7 @@ public class HealthIndicator extends NeedIndicator {
     private Disease actualDisease = null;
     private int nbOfTurnsWithDisease = 0;
 
-    public HealthIndicator(int MAX_VALUE) {
+    public HealthIndicator(double MAX_VALUE) {
         super(MAX_VALUE);
     }
 
