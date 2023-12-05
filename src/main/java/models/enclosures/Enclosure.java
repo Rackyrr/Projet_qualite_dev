@@ -2,6 +2,7 @@ package models.enclosures;
 
 import models.creatures.Creature;
 import models.creatures.Egg;
+import models.items.Food;
 import models.creatures.Viviparous;
 
 import java.util.ArrayList;
@@ -103,15 +104,17 @@ public class Enclosure {
     }
 
     public boolean AddCreature(Creature creature){
+        boolean isAdded;
         if (IsAuhorizedAnimal(creature) ){
             if (creatures.size() < MAXIMUM_CREATURES){
                 creatures.add(creature);
-                return true;
+                isAdded = true;
             }
             else {
                 System.out.println("Il n'y a plus de place dans cette enclos");
-                return false;
+                isAdded = false;
             }
+            return isAdded;
         }
         else {
             System.out.println("Cette créature ne peut pas aller dans cette, elle ne serait pas avec son espèce. \n" +
@@ -134,10 +137,36 @@ public class Enclosure {
             return null;
         }
     }
-    //A faire
-    public void FeedAllCreatures(){}
-    //A faire
-    public void FeedSpecificCreature(Creature creature){}
+
+    //A mettre à jour, ne correspond pas à la classe Food
+    public boolean FeedSpecificCreature(Creature creature, Food food){
+        boolean isFed = false;
+        if (creatures.contains(creature)){
+            if (creature.getHunger().getStarvedState()){
+                creature.eat(food);
+                System.out.println(creature.getName() + "a mangé et est rassasié");
+                isFed = true;
+            }
+            else {
+                System.out.println(creature.getName() + "n'a pas faim, on ne peut donc pas le nourrir");
+            }
+        }
+        else {
+            System.out.println("Cette créature n'est pas dans cette enclos, on ne peut donc pas le nourrir.");
+        }
+        return isFed;
+    }
+    public void FeedAllCreatures(Food food){
+        int numberCreatureFed = 0;
+        boolean tmpCreatureStatus;
+        for (Creature creature : creatures) {
+            tmpCreatureStatus = FeedSpecificCreature(creature, food);
+            if (tmpCreatureStatus) {
+                numberCreatureFed += 1;
+            }
+        }
+        System.out.println(numberCreatureFed + " sur " + creatures.size() + " ont été nourris");
+    }
 
     public int CheckCleanlinessLevel(){
         if (cleanlinessLevel.equals(CleanlinessLevel.GREAT)){
