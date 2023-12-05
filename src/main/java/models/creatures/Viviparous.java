@@ -1,10 +1,24 @@
 package models.creatures;
 
-public abstract class Viviparous extends Creature{
-    private boolean pregnant;
-    private int actualGestationTime = 0;
-    private final int GESTATION_TIME = -1;
+import models.creatures.indicators.HealthIndicator;
+import models.creatures.indicators.HungerIndicator;
+import models.creatures.indicators.SleepIndicator;
+import models.enclosures.Enclosure;
 
+public abstract class Viviparous extends Creature{
+    private boolean pregnant = false;
+    private int actualGestationTime = 0;
+    private final int GESTATION_TIME;
+
+    public Viviparous(String name, int weight, int height, int age, HungerIndicator hunger, SleepIndicator sleep, HealthIndicator health, int NATURAL_DEATH_AGE, boolean dead, Gender gender, Enclosure actualEnclosure, int GESTATION_TIME) {
+        super(name, weight, height, age, hunger, sleep, health, NATURAL_DEATH_AGE, dead, gender, actualEnclosure);
+        this.GESTATION_TIME = GESTATION_TIME;
+    }
+
+    public Viviparous(String name, int weight, int height, int age, double hungerMaxValue, double hungerRate, double sleepMaxValue, double sleepRate, double healthMaxValue, int NATURAL_DEATH_AGE, boolean dead, Gender gender, Enclosure actualEnclosure, int GESTATION_TIME) {
+        super(name, weight, height, age, hungerMaxValue, hungerRate, sleepMaxValue, sleepRate, healthMaxValue, NATURAL_DEATH_AGE, dead, gender, actualEnclosure);
+        this.GESTATION_TIME = GESTATION_TIME;
+    }
 
     public boolean isPregnant() {
         return pregnant;
@@ -44,7 +58,6 @@ public abstract class Viviparous extends Creature{
     }
 
     public void refreshPregnancy(){
-        if (!pregnant) return;
         ++actualGestationTime;
         if (actualGestationTime >= GESTATION_TIME) giveBirth();
     }
@@ -55,8 +68,6 @@ public abstract class Viviparous extends Creature{
     @Override
     public void run() {
         super.run();
-        if(pregnant){
-
-        }
+        if(pregnant) refreshPregnancy();
     }
 }
