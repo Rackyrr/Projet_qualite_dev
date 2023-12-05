@@ -109,6 +109,10 @@ public class Enclosure {
         }
     }
 
+    public boolean isFull() {
+        return creatures.size() + eggs.size() < MAXIMUM_CREATURES;
+    }
+
     public Creature RemoveCreature(Creature creature){
         if (creatures.contains(creature)){
             creatures.remove(creature);

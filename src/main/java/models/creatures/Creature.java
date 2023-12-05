@@ -15,9 +15,11 @@ public abstract class Creature implements Runnable {
     private HungerIndicator hunger;
     private SleepIndicator sleep;
     private HealthIndicator health;
-    private final Range<Integer> NATURAL_DEATH_AGE_INTERVAL;
+    private final int NATURAL_DEATH_AGE;
+    private boolean dead = false;
     private Gender gender;
     private Enclosure actualEnclosure;
+
     public String getName() {
         return name;
     }
@@ -96,11 +98,35 @@ public abstract class Creature implements Runnable {
 
     public boolean getTreated(Medecine med){ return health.treatDisease(med); }
 
-    public void shout(){}
+    public abstract String shout();
 
-    public void growUp(){}
-    public void die(){}
+    public void growUp(){
+        ++age;
+        if(age >= NATURAL_DEATH_AGE && (Math.random() <= 0.1)) die();
+    }
+
+    public void die(){
+        dead = true;
+    }
+
+    @Override
+    public void run() {
+        growUp();
+        sleep.refresh();
+        if (!sleep.getState()) {
+            hunger.refresh();
+            health.refresh();
+        }
+        dead = dead || hunger.getStarvedState() || !health.getState();
+    }
+
+    public boolean canMateWith(Creature mate){
+        return (this.gender == Gender.MALE && mate.gender == Gender.FEMALE) || (this.gender == Gender.FEMALE && mate.gender == Gender.MALE);
+    }
+    public abstract boolean reproduce();
+
     public abstract String getSpecieName();
     public abstract String getCreatureInfo();
 
+    public abstract boolean reproduce(Viviparous mate);
 }
