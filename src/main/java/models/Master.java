@@ -20,13 +20,11 @@ public class Master {
     private void examineEnclosure(Enclosure enclosure) {
         // Afficher les caractéristiques de l'enclos et la liste des créatures
         System.out.println("Caractéristiques de l'enclos:");
-        System.out.println("Nom de l'enclos: " + enclosure.getName());
-        System.out.println("Taille de l'enclos: " + enclosure.getArea());
+        enclosure.toString();
         System.out.println("Liste des créatures:");
-        for (Creature creature : enclosure.getCreatures()) {
-            System.out.println(creature.getName() + " - " + creature.getSpecieName());
-        }
+        enclosure.getCreaturesInfo();
     }
+
     private void cleanEnclosure(Enclosure enclosure){
         System.out.println("Nettoyer l'enclos: " + enclosure.getName());
     }
@@ -34,19 +32,22 @@ public class Master {
         System.out.println("Nourrir les créature de l'enclos: " + enclosure.getName());
     }
     private void transferCreature(Enclosure sourceEnclosure, Enclosure destinationEnclosure, Creature creature) {
-        if (destinationEnclosure.getMAXIMUM_CREATURES() > destinationEnclosure.getCreatures().size()) {
-            System.out.println("Transférer la créature " + creature.getName() + " de l'enclos "
-                    + sourceEnclosure.getName() + " à l'enclos " + destinationEnclosure.getName());
+        if (sourceEnclosure.getCreatures().contains(creature)) {
+            if (destinationEnclosure.getMAXIMUM_CREATURES() > destinationEnclosure.getCreatures().size()) {
+                System.out.println("Transférer la créature " + creature.getName() + " de l'enclos "
+                        + sourceEnclosure.getName() + " à l'enclos " + destinationEnclosure.getName());
 
-            Creature removedCreature = sourceEnclosure.RemoveCreature(creature);
+                Creature removedCreature = sourceEnclosure.RemoveCreature(creature);
 
-            if (removedCreature != null) {
-                destinationEnclosure.AddCreature(removedCreature);
+                if (removedCreature != null) {
+                    destinationEnclosure.AddCreature(removedCreature);
+                }
+            } else {
+                System.out.println("Impossible de transférer la créature. L'enclos de destination est plein.");
             }
-        } else {
-            System.out.println("Impossible de transférer la créature. L'enclos de destination est plein.");
+        }
+        else {
+            System.out.println("Impossible de transférer la créature. La créature ne se trouve pas dans l'enclos sélectionné");
         }
     }
-
-
 }
