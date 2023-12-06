@@ -4,8 +4,6 @@ import models.enclosures.Enclosure;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-
 public class Zoo {
 
     private String name;
@@ -23,14 +21,22 @@ public class Zoo {
         this.numberMaxEnclosure = numberMaxEnclosure;
     }
 
-//    public void displayNumberCreature(){
-//        int totalCreature = 0;
-//        for (Enclosure enclos : numberMaxEnclosure) {
-//            System.out.println("Créature dans le Zoo fantastique'" + enclos.getName() + "':");
-//            System.out.println();
-//        }
-//
-//    }
+    public void displayAllZooCreature(){
+        int totalZooCreature = 0;
+        for (Enclosure enclos : enclosurelist) {
+            totalZooCreature += enclos.getCreatures().size() + enclos.getEggs().size() + enclos.getPregnancyNumber();
+        }
+        System.out.println("Nombres de créatures presentent dans le Zoo fantastique : " + totalZooCreature);
+
+    }
+
+    public void displayEnclosureAllCreature(){
+        int totalEnclosureCreature = 0;
+        for (Enclosure enclos : enclosurelist){
+            totalEnclosureCreature += enclos.getCreatures().size() + enclos.getEggs().size() + enclos.getPregnancyNumber();
+        }
+        System.out.println("Créatures de tous les enclos : " + totalEnclosureCreature);
+    }
 
     public String getName() {
         return name;
