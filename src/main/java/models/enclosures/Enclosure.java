@@ -142,14 +142,12 @@ public class Enclosure {
     public boolean FeedSpecificCreature(Creature creature, Food food){
         boolean isFed = false;
         if (creatures.contains(creature)){
-            if (creature.getHunger().getStarvedState()){
-                creature.eat(food);
-                System.out.println(creature.getName() + "a mangé et est rassasié");
+            if (creature.eat(food)){
+                System.out.println(creature.getName() + "a mangé.");
                 isFed = true;
             }
             else {
-                System.out.println(creature.getName() + "n'a pas faim, on ne peut donc pas le nourrir");
-            }
+                System.out.println(creature.getName() + "n'a plus faim.");            }
         }
         else {
             System.out.println("Cette créature n'est pas dans cette enclos, on ne peut donc pas le nourrir.");
