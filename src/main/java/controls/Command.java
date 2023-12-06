@@ -2,14 +2,16 @@ package controls;
 
 import models.Master;
 import models.Zoo;
+import models.creatures.Creature;
 import models.enclosures.Enclosure;
+import views.Menu;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Command {
+public class Command implements Menu {
     private final Map<String, Method> commands = new HashMap<>();
     private String[] UserCommand;
     private Master master;
@@ -24,6 +26,8 @@ public class Command {
         commands.put("clean", Command.class.getMethod("clean"));
         commands.put("feed", Command.class.getMethod("feed"));
         commands.put("transfer", Command.class.getMethod("transfer"));
+        commands.put("rename", Command.class.getMethod("rename"));
+        commands.put("help", Command.class.getMethod("help"));
         this.zoo = zoo;
         this.master = master;
     }
@@ -47,16 +51,16 @@ public class Command {
         }
         if (UserCommand.length == 2){
             for (Enclosure enclosure : zoo.getEnclosurelist()){
-                if (enclosure.getName().equals(UserCommand[1])){
+                if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
                     master.examineEnclosure(enclosure);
                 }
                 else {
-                    System.out.println("Il n'y a pas d'enclos nommé : " + UserCommand[1]);
+                    Menu.enclosureNotFound(UserCommand[1]);
                 }
             }
         }
         else {
-            System.out.println("Vous n'avez pas rentré le bon nombre d'agurment pour la commande");
+            Menu.typo();
         }
     }
 
@@ -64,20 +68,20 @@ public class Command {
     //Commande utilisateur : clean {nomEnclos}
     public void clean(){
         if (UserCommand.length == 1){
-            System.out.print("Quel enclos voulez vous nettoyer ?");
+            Menu.cleanEnclosureMessage();
         }
         if (UserCommand.length == 2){
             for (Enclosure enclosure : zoo.getEnclosurelist()){
-                if (enclosure.getName().equals(UserCommand[1])){
+                if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
                     master.cleanEnclosure(enclosure);
                 }
                 else {
-                    System.out.println("Il n'y a pas d'enclos nommé : " + UserCommand[1]);
+                    Menu.enclosureNotFound(UserCommand[1]);
                 }
             }
         }
         else {
-            System.out.println("Vous n'avez pas rentré le bon nombre d'agurment pour la commande");
+            Menu.typo();
         }
     }
 
@@ -85,20 +89,20 @@ public class Command {
     //Commande utilisateur : feed {nomEnclos}
     public void feed(){
         if (UserCommand.length == 1){
-            System.out.print("De quel enclos voulez vous nourrir les créatures ?");
+            Menu.feedEnclosureMessage();
         }
         if (UserCommand.length == 2){
             for (Enclosure enclosure : zoo.getEnclosurelist()){
-                if (enclosure.getName().equals(UserCommand[1])){
+                if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
                     master.feedEnclosure(enclosure);
                 }
                 else {
-                    System.out.println("Il n'y a pas d'enclos nommé : " + UserCommand[1]);
+                    Menu.enclosureNotFound(UserCommand[1]);
                 }
             }
         }
         else {
-            System.out.println("Vous n'avez pas rentré le bon nombre d'agurment pour la commande");
+            Menu.typo();
         }
     }
 
@@ -109,13 +113,90 @@ public class Command {
             System.out.print("Quel créature voulez-vous déplacez ?");
         }
         else if (UserCommand.length == 2){
+            System.out.println("De quel enclos ?");
+        }
+        else if (UserCommand.length == 3){
             System.out.println("Dans quel enclos ?");
         }
-        if (UserCommand.length == 3){
-
+        else if (UserCommand.length == 4){
+            Enclosure enclosSource = null;
+            Enclosure enclosDest = null;
+            for (Enclosure enclosure : zoo.getEnclosurelist()){
+                if (enclosure.getName().equalsIgnoreCase(UserCommand[2])){
+                    enclosSource = enclosure;
+                }
+                else {
+                    Menu.enclosureNotFound(UserCommand[2]);
+                }
+                if (enclosure.getName().equalsIgnoreCase(UserCommand[3])){
+                    enclosDest = enclosSource;
+                }
+                else {
+                    Menu.enclosureNotFound(UserCommand[3]);
+                }
+                if (enclosSource != null && enclosDest != null){
+                    for (Creature creature : enclosSource.getCreatures()){
+                        if (creature.getName().equalsIgnoreCase(UserCommand[1])){
+                            master.transferCreature(enclosSource, enclosDest, creature);
+                        }
+                        else {
+                            System.out.println("Il n'a pas de créature nommée " + UserCommand[1]
+                                    + " dans l'enclos " + enclosSource.getName());
+                        }
+                    }
+                }
+            }
         }
         else {
-            System.out.println("Vous n'avez pas rentré le bon nombre d'agurment pour la commande");
+            Menu.typo();
         }
     }
+
+    //Permet de renommer une créature
+    //Commande utilisateur : rename {NomCreature/Enclos} {NewName}
+    public void rename(){
+        if (UserCommand.length == 1){
+            System.out.print("Qu'est ce que vous voulez renommer ?");
+        }
+        else if (UserCommand.length == 2){
+            System.out.println("Quel nom voulez vous lui attribuer ?");
+        }
+        else if (UserCommand.length == 3){
+            Enclosure enclosureRename = null;
+            Creature creatureRename = null;
+            for (Enclosure enclosure : zoo.getEnclosurelist()){
+                if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
+                    enclosureRename = enclosure;
+                    enclosureRename.setName((UserCommand[2]));
+                    break;
+                }
+                for (Creature creature : enclosure.getCreatures()){
+                    if (creature.getName().equalsIgnoreCase(UserCommand[1])){
+                        creatureRename = creature;
+                        creatureRename.setName(UserCommand[2]);
+                        break;
+                    }
+                }
+                if (creatureRename != null){
+                    creatureRename.setName(UserCommand[2]);
+                    break;
+                }
+            }
+        }
+        else {
+            Menu.typo();
+        }
+    }
+
+    //Permet d'afficher toutes les commandes disponibles
+    //Commande utilisateur : help
+    public void help(){
+        if (UserCommand.length != 1){
+            Menu.typo();
+        }
+        else {
+            Menu.ShowCommandList();
+        }
+    }
+
 }

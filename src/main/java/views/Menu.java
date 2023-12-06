@@ -34,7 +34,7 @@ public interface Menu {
     }
 
     public static void CheckCleanlinessLevelMessage(CleanlinessLevel cleanlinessLevel, Class typeEnclos) {
-        if (typeEnclos.getClass().getName().equals("Enclosure")) {
+        if (typeEnclos.getName().equals("Enclosure")) {
             if (cleanlinessLevel.equals(CleanlinessLevel.GREAT)) {
                 System.out.println("L'enclos est propre, il n'a pas besoin d'être nettoyé.");
             } else if (cleanlinessLevel.equals(CleanlinessLevel.DECENT)) {
@@ -43,7 +43,7 @@ public interface Menu {
                 System.out.println("l'enclos est très sale, il a besoin d'être nettoyé.");
             }
         }
-        if (typeEnclos.getClass().getName().equals("Aquarium")) {
+        if (typeEnclos.getName().equals("Aquarium")) {
             if (cleanlinessLevel.equals(CleanlinessLevel.GREAT)) {
                 System.out.println("Le bassin est propre, il n'a pas besoin d'être nettoyé.");
             } else if (cleanlinessLevel.equals(CleanlinessLevel.DECENT)) {
@@ -52,7 +52,7 @@ public interface Menu {
                 System.out.println("Le bassin est très sale, il a besoin d'être nettoyé.");
             }
         }
-        if (typeEnclos.getClass().getName().equals("Aviary")) {
+        if (typeEnclos.getName().equals("Aviary")) {
             if (cleanlinessLevel.equals(CleanlinessLevel.GREAT)) {
                 System.out.println("Le bassin est propre, il n'a pas besoin d'être nettoyé.");
             } else if (cleanlinessLevel.equals(CleanlinessLevel.DECENT)) {
@@ -76,17 +76,41 @@ public interface Menu {
     }
 
     public static void creatureNotSameSpecie(Class typeEnclos) {
-        if (typeEnclos.getClass().getName().equals("Enclosure")) {
+        if (typeEnclos.getName().equals("Enclosure")) {
             System.out.println("Cette créature ne peut pas aller dans cet enclos, elle ne serait pas avec son espèce. \n" +
                     "Trouvez un enclos qui contient la même espèce que cette créature.");
         }
-        if (typeEnclos.getClass().getName().equals("Aquarium")) {
+        if (typeEnclos.getName().equals("Aquarium")) {
             System.out.println("Cette créature ne peut pas aller dans cet aquarium, elle ne serait pas avec son espèce. \n" +
                     "Trouvez un aquarium qui contient la même espèce que cette créature.");
         }
-        if (typeEnclos.getClass().getName().equals("Aviary")) {
+        if (typeEnclos.getName().equals("Aviary")) {
             System.out.println("Cette créature ne peut pas aller dans cette volière, elle ne serait pas avec son espèce. \n" +
                     "Trouvez une volière qui contient la même espèce que cette créature.");
         }
+    }
+
+    public static void ShowCommandList(){
+        System.out.println(
+                """
+                        Voici toutes les commandes à votre disposition :
+                        
+                        -check : Pour examiner un enclos
+                            Utilisation : check <NomEnclos>
+                            
+                        -clean : Pour nettoyer un enclos
+                            Utilisation : clean <NomEnclos>
+                            
+                        -feed : Pour nourrir toutes les créatures d'un enclos
+                            Utilisation : feed <NomEnclos
+                            
+                        -transfer : Pour transferer une créature d'un enclos à un autre
+                            Utilisation : transfer <NomCreature> <NomEnclosSource> <NomEnclosDestination>
+                            
+                        -rename : Pour renommer une créature ou un enclos
+                            Utilisation : rename <NomCreatureActuel> <NouveauNom>
+                            
+                        -help : Pour afficher toute les commandes disponibles
+                            Utilisation : help""");
     }
 }
