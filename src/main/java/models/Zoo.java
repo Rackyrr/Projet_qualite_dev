@@ -10,17 +10,17 @@ public class Zoo {
 
     private String name;
 
-    private String fantasticMaster;
+    private Master fantasticMaster;
 
     private int numberMaxEnclosure;
 
     private ArrayList<Enclosure> enclosurelist;
 
-    public Zoo(String name, String fantasticMaster, int numberMaxEnclosure) {
+    public Zoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
         this.name = name;
         this.fantasticMaster = fantasticMaster;
-        this.fantasticMaster = fantasticMaster;
         this.enclosurelist = new ArrayList<>();
+        this.numberMaxEnclosure = numberMaxEnclosure;
     }
 
 //    public void displayNumberCreature(){
@@ -40,11 +40,11 @@ public class Zoo {
         this.name = name;
     }
 
-    public String getFantasticMaster() {
+    public Master getFantasticMaster() {
         return fantasticMaster;
     }
 
-    public void setFantasticMaster(String fantasticMaster) {
+    public void setFantasticMaster(Master fantasticMaster) {
         this.fantasticMaster = fantasticMaster;
     }
 

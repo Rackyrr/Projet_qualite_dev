@@ -17,7 +17,7 @@ public class Master {
     }
 
 
-    private void examineEnclosure(Enclosure enclosure) {
+    public void examineEnclosure(Enclosure enclosure) {
         // Afficher les caractéristiques de l'enclos et la liste des créatures
         System.out.println("Caractéristiques de l'enclos:");
         System.out.println(enclosure.toString());
@@ -25,13 +25,13 @@ public class Master {
         enclosure.getCreaturesInfo();
     }
 
-    private void cleanEnclosure(Enclosure enclosure){
+    public void cleanEnclosure(Enclosure enclosure){
         System.out.println("Nettoyer l'enclos: " + enclosure.getName());
     }
-    private void feedCreature(Enclosure enclosure){
+    public void feedEnclosure(Enclosure enclosure){
         System.out.println("Nourrir les créature de l'enclos: " + enclosure.getName());
     }
-    private void transferCreature(Enclosure sourceEnclosure, Enclosure destinationEnclosure, Creature creature) {
+    public void transferCreature(Enclosure sourceEnclosure, Enclosure destinationEnclosure, Creature creature) {
         if (sourceEnclosure.getCreatures().contains(creature)) {
             if (destinationEnclosure.isFull()) {
                 System.out.println("Transférer la créature " + creature.getName() + " de l'enclos "
