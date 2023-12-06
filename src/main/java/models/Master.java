@@ -33,7 +33,7 @@ public class Master {
     }
     private void transferCreature(Enclosure sourceEnclosure, Enclosure destinationEnclosure, Creature creature) {
         if (sourceEnclosure.getCreatures().contains(creature)) {
-            if (destinationEnclosure.getMAXIMUM_CREATURES() > destinationEnclosure.getCreatures().size()) {
+            if (destinationEnclosure.isFull()) {
                 System.out.println("Transférer la créature " + creature.getName() + " de l'enclos "
                         + sourceEnclosure.getName() + " à l'enclos " + destinationEnclosure.getName());
 
