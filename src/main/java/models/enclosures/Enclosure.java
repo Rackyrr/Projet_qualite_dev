@@ -111,7 +111,7 @@ public class Enclosure {
                 isAdded = true;
             }
             else {
-                System.out.println("Il n'y a plus de place dans cette enclos");
+                System.out.println("Il n'y a plus de place dans cet enclos");
                 isAdded = false;
             }
             return isAdded;
