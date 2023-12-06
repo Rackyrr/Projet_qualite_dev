@@ -23,7 +23,7 @@ public class Werewolf extends Viviparous implements IRunning{
 
     @Override
     public String shout() {
-        return null;
+        return String.format("%s hurle !",this.getName());
     }
 
     @Override

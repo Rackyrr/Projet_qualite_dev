@@ -23,7 +23,7 @@ public class Phoenix extends Oviparous implements IFlying, IRebirth{
 
     @Override
     public String shout() {
-        return null;
+        return String.format("%s gazouille !",this.getName());
     }
 
     @Override

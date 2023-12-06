@@ -23,7 +23,7 @@ public class Unicorn extends Viviparous implements IRunning{
 
     @Override
     public String shout() {
-        return null;
+        return String.format("%s hennit !",this.getName());
     }
 
     @Override

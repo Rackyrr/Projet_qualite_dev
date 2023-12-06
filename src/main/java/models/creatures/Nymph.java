@@ -23,7 +23,7 @@ public class Nymph extends Viviparous implements IRebirth{
 
     @Override
     public String shout() {
-        return null;
+        return String.format("%s chante !",this.getName());
     }
 
     @Override

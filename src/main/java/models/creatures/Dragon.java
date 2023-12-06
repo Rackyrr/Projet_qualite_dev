@@ -28,7 +28,7 @@ public class Dragon extends Oviparous implements IRunning, IFlying{
 
     @Override
     public String shout() {
-        return null;
+        return String.format("%s rugit !",this.getName());
     }
 
 }

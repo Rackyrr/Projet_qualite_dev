@@ -23,7 +23,7 @@ public class Siren extends Viviparous implements ISwimming{
 
     @Override
     public String shout() {
-        return null;
+        return String.format("%s chante !",this.getName());
     }
 
     @Override

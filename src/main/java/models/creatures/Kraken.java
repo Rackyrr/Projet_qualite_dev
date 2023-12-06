@@ -21,7 +21,7 @@ public class Kraken extends Oviparous implements ISwimming{
 
     @Override
     public String shout() {
-        return null;
+        return String.format("%s crie !",this.getName());
     }
 
     @Override

@@ -23,7 +23,7 @@ public class Megalodon extends Oviparous implements ISwimming{
 
     @Override
     public String shout() {
-        return null;
+        return String.format("%s fait de petites bulles !",this.getName());
     }
 
     @Override
