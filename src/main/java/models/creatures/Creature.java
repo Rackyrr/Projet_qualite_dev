@@ -5,7 +5,7 @@ import models.enclosures.Enclosure;
 import models.items.Consumable;
 import models.items.Food;
 import models.items.Medecine;
-import org.apache.commons.lang3.Range;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class Creature implements Runnable {
     private String name;
@@ -119,7 +119,7 @@ public abstract class Creature implements Runnable {
         this.actualEnclosure = actualEnclosure;
     }
 
-    public boolean use(Consumable c) { return c.useOn(this); }
+    public boolean use(@NotNull Consumable c) { return c.useOn(this); }
 
     public boolean eat(Food food){ return hunger.replenish(food); }
 
@@ -129,11 +129,19 @@ public abstract class Creature implements Runnable {
 
     public void growUp(){
         ++age;
-        if(age >= NATURAL_DEATH_AGE && (Math.random() <= 0.1)) die();
+        if(age >= NATURAL_DEATH_AGE && (Math.random() <= 0.2)) setDead(true);
     }
 
-    public void die(){
-        dead = true;
+    public int getNATURAL_DEATH_AGE() {
+        return NATURAL_DEATH_AGE;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead){
+        this.dead = dead;
     }
 
     @Override

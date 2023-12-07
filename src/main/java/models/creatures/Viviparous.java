@@ -62,8 +62,7 @@ public abstract class Viviparous extends Creature{
         if (actualGestationTime >= GESTATION_TIME) giveBirth();
     }
 
-    private void giveBirth() {
-    }
+    public abstract boolean giveBirth();
 
     @Override
     public void run() {

@@ -1,6 +1,19 @@
 package models.creatures;
 
+import models.creatures.indicators.HealthIndicator;
+import models.creatures.indicators.HungerIndicator;
+import models.creatures.indicators.SleepIndicator;
+import models.enclosures.Enclosure;
+
 public class Kraken extends Oviparous implements ISwimming{
+    public Kraken(String name, int weight, int height, int age, HungerIndicator hunger, SleepIndicator sleep, HealthIndicator health, int NATURAL_DEATH_AGE, boolean dead, Gender gender, Enclosure actualEnclosure) {
+        super(name, weight, height, age, hunger, sleep, health, NATURAL_DEATH_AGE, dead, gender, actualEnclosure);
+    }
+
+    public Kraken(String name, int weight, int height, int age, double hungerMaxValue, double hungerRate, double sleepMaxValue, double sleepRate, double healthMaxValue, int NATURAL_DEATH_AGE, boolean dead, Gender gender, Enclosure actualEnclosure) {
+        super(name, weight, height, age, hungerMaxValue, hungerRate, sleepMaxValue, sleepRate, healthMaxValue, NATURAL_DEATH_AGE, dead, gender, actualEnclosure);
+    }
+
     @Override
     public String getSpecieName() {return "Kraken";}
 
