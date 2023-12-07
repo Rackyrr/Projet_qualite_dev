@@ -114,14 +114,25 @@ public interface Menu {
                             Utilisation : help""");
     }
 
-    public static void IntroCreateMaster(){
-        System.out.println(
-                """
-                    Bienvenue dans votre nouveau zoo fantastique !
-                    Veuillez entrer plusieurs information pour que nous puissions créer votre personnage :
-                    Quelle est votre :
-                    Nom     Âge     Sexe(0/1)
-                    """);
+    public static void CreateMaster(int etape){
+        if (etape == 1) {
+            System.out.println(
+                    """
+                            Bienvenue dans votre nouveau zoo fantastique !
+                            Veuillez entrer plusieurs information pour que nous puissions créer votre personnage :
+                            Quelle est votre nom ?
+                            """);
+        }
+        else if (etape == 2)
+            System.out.println("Quelle est votre âge ?");
+        else if (etape == -2)
+            System.out.println("Veuillez entrer un nombre");
+        else if (etape == 3)
+            System.out.println("Quelle est votre sexe ?");
+        else if (etape == -3) {
+            System.out.println("Veuillez entrer les valeurs acceptées : h/f");
+        }
+
     }
 
     public static void CreateZoo(){

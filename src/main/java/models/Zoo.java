@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zoo {
-    private Zoo zoo;
+    private static Zoo zoo;
 
     private String name;
 
@@ -22,7 +22,7 @@ public class Zoo {
         this.numberMaxEnclosure = numberMaxEnclosure;
     }
 
-    public Zoo getZoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
+    public static Zoo getZoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
         if (zoo == null) {
             zoo = new Zoo(name, fantasticMaster, numberMaxEnclosure);
         }
