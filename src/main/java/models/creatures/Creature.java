@@ -5,7 +5,6 @@ import models.enclosures.Enclosure;
 import models.items.Consumable;
 import models.items.Food;
 import models.items.Medecine;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class Creature implements Runnable {
     private String name;
@@ -119,7 +118,7 @@ public abstract class Creature implements Runnable {
         this.actualEnclosure = actualEnclosure;
     }
 
-    public boolean use(@NotNull Consumable c) { return c.useOn(this); }
+    public boolean use(Consumable c) { return c.useOn(this); }
 
     public boolean eat(Food food){ return hunger.replenish(food); }
 
