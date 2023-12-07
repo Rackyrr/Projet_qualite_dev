@@ -9,12 +9,22 @@ import java.util.Scanner;
 
 public interface Menu {
     public static void promptMenu() {
-        System.out.println("=== Menu ===");
-        System.out.println("1. Examiner les caractéristiques d'un enclos");
-        System.out.println("2. Nettoyer un enclos");
-        System.out.println("3. Nourrir les créatures d'un enclos");
-        System.out.println("4. Transférer une créature");
-        System.out.println("5. Quitter");
+        System.out.println(
+                """
+                         === Que voulez-vous faire ? ===
+                    1. Examiner les caractéristiques d'un enclos
+                    2. Nettoyer un enclos
+                    3. Nourrir les créatures d'un enclos
+                    4. Transférer une créature
+                    5. Quitter
+                    
+                    Tapez help pour avoir des informations sur les commandes.
+                    """);
+    }
+
+    public static void commandNotFound(){
+        System.out.println("Cette commande n'existe pas. \n" +
+                "Tapez List_command pour avoir toutes les commandes disponibles");
     }
 
     public static void enclosureNotFound(String enclosureName) {
@@ -110,8 +120,12 @@ public interface Menu {
                         -rename : Pour renommer une créature ou un enclos
                             Utilisation : rename <NomCreatureActuel> <NouveauNom>
                             
+                        -exit : Pour quitter l'application
+                            Utilisation : exit
+                            
                         -help : Pour afficher toute les commandes disponibles
-                            Utilisation : help""");
+                            Utilisation : help
+                        """);
     }
 
     public static void CreateMaster(int etape){
@@ -138,16 +152,15 @@ public interface Menu {
     public static void CreateZoo(){
         System.out.println("Maintenant, quel nom voulez vous donner à votre zoo fanstastique ?");
     }
-    public static void Intro(Master master, String name) {
+    public static void Intro(Master master) {
         System.out.println("=== Bienvenue dans le Zoo Fantastique ===");
         System.out.println("Félicitations, " + master.getName() + " ! Vous venez de créer votre propre zoo magique.");
         System.out.println("Explorez les différentes enclos, découvrez de nouvelles créatures," +
-                "nettoyez les espaces pour maintenir la propreté, nourrissez vos animaux fantastiques, " +
+                "nettoyez les espaces pour maintenir la propreté, nourrisssez vos animaux fantastiques, " +
                 "et transférez-les entre les enclos pour une meilleure gestion.");
         System.out.println("Rencontrez des espèces uniques, gérez votre zoo avec soin et faites en sorte que vos" +
                 " créatures prospèrent dans ce monde fantastique.");
         System.out.println("Que l'aventure commence !");
         System.out.println("========================================");
     }
-
 }
