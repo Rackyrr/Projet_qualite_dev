@@ -119,7 +119,7 @@ public interface Menu {
             System.out.println(
                     """
                             Bienvenue dans votre nouveau zoo fantastique !
-                            Veuillez entrer plusieurs information pour que nous puissions créer votre personnage :
+                            Veuillez entrer plusieurs informations pour que nous puissions créer votre personnage :
                             Quelle est votre nom ?
                             """);
         }
@@ -138,4 +138,16 @@ public interface Menu {
     public static void CreateZoo(){
         System.out.println("Maintenant, quel nom voulez vous donner à votre zoo fanstastique ?");
     }
+    public static void Intro(Master master, String name) {
+        System.out.println("=== Bienvenue dans le Zoo Fantastique ===");
+        System.out.println("Félicitations, " + master.getName() + " ! Vous venez de créer votre propre zoo magique.");
+        System.out.println("Explorez les différentes enclos, découvrez de nouvelles créatures," +
+                "nettoyez les espaces pour maintenir la propreté, nourrissez vos animaux fantastiques, " +
+                "et transférez-les entre les enclos pour une meilleure gestion.");
+        System.out.println("Rencontrez des espèces uniques, gérez votre zoo avec soin et faites en sorte que vos" +
+                " créatures prospèrent dans ce monde fantastique.");
+        System.out.println("Que l'aventure commence !");
+        System.out.println("========================================");
+    }
+
 }
