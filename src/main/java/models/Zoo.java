@@ -4,33 +4,47 @@ import models.enclosures.Enclosure;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-
 public class Zoo {
+    private static Zoo zoo;
 
     private String name;
 
-    private String fantasticMaster;
+    private Master fantasticMaster;
 
     private int numberMaxEnclosure;
 
     private ArrayList<Enclosure> enclosurelist;
 
-    public Zoo(String name, String fantasticMaster, int numberMaxEnclosure) {
+    private Zoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
         this.name = name;
         this.fantasticMaster = fantasticMaster;
-        this.fantasticMaster = fantasticMaster;
         this.enclosurelist = new ArrayList<>();
+        this.numberMaxEnclosure = numberMaxEnclosure;
     }
 
-//    public void displayNumberCreature(){
-//        int totalCreature = 0;
-//        for (Enclosure enclos : numberMaxEnclosure) {
-//            System.out.println("Créature dans le Zoo fantastique'" + enclos.getName() + "':");
-//            System.out.println();
-//        }
-//
-//    }
+    public static Zoo getZoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
+        if (zoo == null) {
+            zoo = new Zoo(name, fantasticMaster, numberMaxEnclosure);
+        }
+        return zoo;
+    }
+
+    public void displayAllZooCreature(){
+        int totalZooCreature = 0;
+        for (Enclosure enclos : enclosurelist) {
+            totalZooCreature += enclos.getCreatures().size() + enclos.getEggs().size() + enclos.getPregnancyNumber();
+        }
+        System.out.println("Nombres de créatures presentent dans le Zoo fantastique : " + totalZooCreature);
+
+    }
+
+    public void displayEnclosureAllCreature(){
+        int totalEnclosureCreature = 0;
+        for (Enclosure enclos : enclosurelist){
+            totalEnclosureCreature += enclos.getCreatures().size() + enclos.getEggs().size() + enclos.getPregnancyNumber();
+        }
+        System.out.println("Créatures de tous les enclos : " + totalEnclosureCreature);
+    }
 
     public String getName() {
         return name;
@@ -40,11 +54,11 @@ public class Zoo {
         this.name = name;
     }
 
-    public String getFantasticMaster() {
+    public Master getFantasticMaster() {
         return fantasticMaster;
     }
 
-    public void setFantasticMaster(String fantasticMaster) {
+    public void setFantasticMaster(Master fantasticMaster) {
         this.fantasticMaster = fantasticMaster;
     }
 
