@@ -7,15 +7,22 @@ import models.enclosures.Enclosure;
 import java.util.ArrayList;
 
 public class Master {
+    private static Master master;
     private String name;
     private int age;
     private Gender gender;
-    public Master(String name, int age, Gender gender){
+    private Master(String name, int age, Gender gender){
         this.name = name;
         this.age = age;
         this.gender = gender;
     }
 
+    public static Master getMaster(String name, int age, Gender gender){
+        if (master == null){
+            master = new Master(name, age, gender);
+        }
+        return master;
+    }
 
     public void examineEnclosure(Enclosure enclosure) {
         // Afficher les caractéristiques de l'enclos et la liste des créatures

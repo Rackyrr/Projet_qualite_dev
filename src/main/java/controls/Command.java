@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Command implements Menu {
+    private static Command command;
     private final Map<String, Method> commands = new HashMap<>();
     private String[] UserCommand;
     private Master master;
@@ -21,7 +22,7 @@ public class Command implements Menu {
         return commands;
     }
 
-    public Command(Master master, Zoo zoo) throws NoSuchMethodException {
+    private Command(Master master, Zoo zoo) throws NoSuchMethodException {
         commands.put("check", Command.class.getMethod("check"));
         commands.put("clean", Command.class.getMethod("clean"));
         commands.put("feed", Command.class.getMethod("feed"));
@@ -30,6 +31,13 @@ public class Command implements Menu {
         commands.put("help", Command.class.getMethod("help"));
         this.zoo = zoo;
         this.master = master;
+    }
+
+    public static Command getCommand(Master master, Zoo zoo) throws NoSuchMethodException {
+        if (command == null){
+            command = new Command(master, zoo);
+        }
+        return command;
     }
 
     public void processCommand(String[] userCommand) throws InvocationTargetException, IllegalAccessException {

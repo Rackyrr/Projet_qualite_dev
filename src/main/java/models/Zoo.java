@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zoo {
+    private Zoo zoo;
 
     private String name;
 
@@ -14,11 +15,18 @@ public class Zoo {
 
     private ArrayList<Enclosure> enclosurelist;
 
-    public Zoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
+    private Zoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
         this.name = name;
         this.fantasticMaster = fantasticMaster;
         this.enclosurelist = new ArrayList<>();
         this.numberMaxEnclosure = numberMaxEnclosure;
+    }
+
+    public Zoo getZoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
+        if (zoo == null) {
+            zoo = new Zoo(name, fantasticMaster, numberMaxEnclosure);
+        }
+        return zoo;
     }
 
     public void displayAllZooCreature(){

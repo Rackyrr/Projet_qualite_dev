@@ -113,4 +113,18 @@ public interface Menu {
                         -help : Pour afficher toute les commandes disponibles
                             Utilisation : help""");
     }
+
+    public static void IntroCreateMaster(){
+        System.out.println(
+                """
+                    Bienvenue dans votre nouveau zoo fantastique !
+                    Veuillez entrer plusieurs information pour que nous puissions créer votre personnage :
+                    Quelle est votre :
+                    Nom     Âge     Sexe(0/1)
+                    """);
+    }
+
+    public static void CreateZoo(){
+        System.out.println("Maintenant, quel nom voulez vous donner à votre zoo fanstastique ?");
+    }
 }
