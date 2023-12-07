@@ -20,6 +20,12 @@ public class Werewolf {
         this.impulsivenessFactor = impulsivenessFactor;
         this.pack = pack;
         this.level = calculateLevel();
+
+        if (pack.equals("AlphaMale")) {
+            this.gender = "male_alpha";
+        } else if (pack.equals("AlphaFemale")) {
+            this.gender = "female_alpha";
+        }
     }
     private int calculateLevel() {
         return 0;
@@ -47,6 +53,32 @@ public class Werewolf {
 
     public int getDominationRank() {
         return dominationRank;
+    }
+
+    public void increaseDominationRank() {
+        dominationRank++;
+    }
+
+    public void exchangeRanks(Werewolf other) {
+        int tempRank = other.getDominationRank();
+        other.setDominationRank(this.getDominationRank());
+        this.setDominationRank(tempRank);
+    }
+
+    public void decreaseDominationRank() {
+        dominationRank = Math.max(dominationRank - 1, 1);
+    }
+
+    public void setDominationRank(int newRank) {
+        dominationRank = newRank;
+    }
+
+    public boolean isAlphaMale() {
+        return gender.equals("male_alpha");
+    }
+
+    public boolean isAlphaFemale() {
+        return gender.equals("female_alpha");
     }
 
     public int getLevel() {

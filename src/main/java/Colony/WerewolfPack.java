@@ -21,6 +21,47 @@ public class WerewolfPack {
 
     public void addWerewolf(Werewolf werewolf) {
         members.add(werewolf);
+        adjustHierarchy(werewolf);
+    }
+
+    private void adjustHierarchy(Werewolf werewolf) {
+        if (werewolf != alphaMale && werewolf != alphaFemale) {
+            if (werewolf.getDominationRank() >= alphaMale.getStrength() * alphaMale.getImpulsivenessFactor()
+                    && !werewolf.getGender().equals("female_alpha")) {
+                performDomination(werewolf);
+            } else {
+                werewolf.setDominationRank(werewolf.getDominationRank() - 1);
+            }
+        }
+    }
+
+    private void performDomination(Werewolf aggressor) {
+        for (Werewolf target : members) {
+            if (target != aggressor && target.getStrength() < aggressor.getStrength()
+                    && !target.getGender().equals("female_alpha")) {
+                aggressor.increaseDominationRank();
+                aggressor.exchangeRanks(target);
+                target.decreaseDominationRank();
+
+                if (target.equals(alphaMale)) {
+                    Werewolf newAlphaFemale = findAlphaFemale();
+                    alphaFemale = newAlphaFemale;
+                }
+
+                break;
+            }
+        }
+    }
+
+    private Werewolf findAlphaFemale() {
+        Werewolf newAlphaFemale = alphaFemale;
+        for (Werewolf member : members) {
+            if (member != alphaMale && member != alphaFemale && member.getGender().equals("female")
+                    && member.getStrength() > newAlphaFemale.getStrength()) {
+                newAlphaFemale = member;
+            }
+        }
+        return newAlphaFemale;
     }
 
     public void displayPackHierarchy() {
