@@ -19,6 +19,7 @@ public class Werewolf {
     //private boolean isAlphaCouple;
     private boolean isSolitary;
     private int numberOfOffspring;
+    private boolean isOmega;
     public Werewolf(String gender, AgeCategory ageCategory, int strength, int dominationExerted, int dominationSuffered,
                     int dominationRank, double impulsivenessFactor, String pack) {
         this.gender = gender;
@@ -33,6 +34,7 @@ public class Werewolf {
         this.isSolitary = false;
         //this.isAlphaCouple = false;
         this.numberOfOffspring = 0;
+        this.isOmega = false;
         if (pack.equals("AlphaMale")) {
             this.gender = "male_alpha";
         } else if (pack.equals("AlphaFemale")) {
@@ -147,6 +149,10 @@ public class Werewolf {
 
     public int getLevel() {
         return level;
+    }
+
+    public boolean isOmega() {
+        return isOmega;
     }
 
     public double getImpulsivenessFactor() {
