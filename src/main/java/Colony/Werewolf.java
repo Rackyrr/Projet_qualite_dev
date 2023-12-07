@@ -1,7 +1,12 @@
 package Colony;
 public class Werewolf {
+    public enum AgeCategory {
+        YOUNG,
+        ADULT,
+        OLD
+    }
     private String gender;
-    private String ageCategory;
+    private AgeCategory ageCategory;
     private int strength;
     private int dominationExerted;
     private int dominationSuffered;
@@ -9,7 +14,9 @@ public class Werewolf {
     private int level;
     private double impulsivenessFactor;
     private String pack;
-    public Werewolf(String gender, String ageCategory, int strength, int dominationExerted, int dominationSuffered,
+    private Werewolf alphaMale;
+    private Werewolf alphaFemale;
+    public Werewolf(String gender, AgeCategory ageCategory, int strength, int dominationExerted, int dominationSuffered,
                     int dominationRank, double impulsivenessFactor, String pack) {
         this.gender = gender;
         this.ageCategory = ageCategory;
@@ -22,14 +29,34 @@ public class Werewolf {
         this.level = calculateLevel();
     }
     private int calculateLevel() {
-        return 0;
+        int ageCategoryMultiplier = 0;
+
+        switch (ageCategory) {
+            case YOUNG:
+                ageCategoryMultiplier = 1;
+                break;
+            case ADULT:
+                ageCategoryMultiplier = 3; //J'ai mis 3 ici car un adulte a le plus de puissance
+                break;
+            case OLD:
+                ageCategoryMultiplier = 2;
+                break;
+        }
+// AUTRE METHODE SANS UTILISER DE MULTIPLICATEUR
+//        if (ageCategory == AgeCategory.YOUNG) {
+//            level -= 10;  // Force plus faible pour les jeunes
+//        } else if (ageCategory == AgeCategory.OLD) {
+//            level -= 5;   // Force plus faible pour les vieux
+//        }
+
+        return (strength + dominationExerted + dominationSuffered) * ageCategoryMultiplier;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public String getAgeCategory() {
+    public AgeCategory getAgeCategory() {
         return ageCategory;
     }
 
@@ -96,5 +123,14 @@ public class Werewolf {
         System.out.println("Niveau : " + level);
         System.out.println("Facteur d'Impétuosité : " + impulsivenessFactor);
         System.out.println("Meute : " + pack);
+    }
+    public void formAlphaCouple(Werewolf potentialAlphaMale, Werewolf potentialAlphaFemale) {
+        if (potentialAlphaMale.getGender().equals("male") && potentialAlphaMale.getAgeCategory() == AgeCategory.ADULT &&
+                potentialAlphaFemale.getGender().equals("female") && potentialAlphaFemale.getAgeCategory() == AgeCategory.ADULT) {
+            if (alphaMale == null || potentialAlphaMale.getStrength() > alphaMale.getStrength()) {
+                alphaMale = potentialAlphaMale;
+                alphaFemale = potentialAlphaFemale;
+            }
+        }
     }
 }
