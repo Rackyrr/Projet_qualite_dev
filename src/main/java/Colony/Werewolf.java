@@ -57,6 +57,31 @@ public class Werewolf {
         return impulsivenessFactor;
     }
 
+    public void howl()  {
+        System.out.println("Awooooo");
+    }
+
+    public void hearHowl() {
+        if (!isSleeping() && !isSick()) {
+            System.out.println("Les Loup Garou ecoute les hurlements");
+        } else {
+            System.out.println("Le Loup Garou n'ecoute pas les hurlements car soit il dort ou soit il est malade ");
+        }
+    }
+
+    public void transformIntoHuman() {
+        System.out.println("Le Loup Garou se transforme en humain");
+    }
+
+    private boolean isSleeping() {
+        return false;
+    }
+
+    private boolean isSick() {
+        return false;
+    }
+
+
     public String getPack() {
         return pack;
     }
