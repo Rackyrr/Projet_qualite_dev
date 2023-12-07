@@ -81,7 +81,7 @@
       <workItem from="1701888139231" duration="1010000" />
       <workItem from="1701963037726" duration="9053000" />
       <workItem from="1701973923240" duration="4416000" />
-      <workItem from="1701986739148" duration="5106000" />
+      <workItem from="1701986739148" duration="5773000" />
     </task>
     <task id="LOCAL-00001" summary="création de la fonction examineEnclosure">
       <created>1701712297200</created>
@@ -139,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701990484017</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Implemented calculateLevel method and created function for AlphaCouple in Werewolf">
+      <created>1701992146827</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1701992146827</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
