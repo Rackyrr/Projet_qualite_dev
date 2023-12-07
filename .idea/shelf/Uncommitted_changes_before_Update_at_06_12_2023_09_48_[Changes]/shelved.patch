@@ -1,0 +1,14 @@
+Index: src/main/java/view/Menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/Menu.java b/src/main/java/view/Menu.java
+new file mode 100644
+--- /dev/null	(date 1701816818756)
++++ b/src/main/java/view/Menu.java	(date 1701816818756)
+@@ -0,0 +1,4 @@
++package view;
++
++public class Menu {
++}

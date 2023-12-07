@@ -1,0 +1,51 @@
+Index: src/main/java/models/Master.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package models;\r\nimport models.creatures.Creature;\r\nimport models.creatures.Egg;\r\nimport models.creatures.Gender;\r\nimport models.enclosures.Enclosure;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Master {\r\n    private String name;\r\n    private int age;\r\n    private Gender gender;\r\n    public Master(String name, int age, Gender gender){\r\n        this.name = name;\r\n        this.age = age;\r\n        this.gender = gender;\r\n    }\r\n\r\n\r\n    private void examineEnclosure(Enclosure enclosure) {\r\n        // Afficher les caractéristiques de l'enclos et la liste des créatures\r\n        System.out.println(\"Caractéristiques de l'enclos:\");\r\n        System.out.println(enclosure.toString());\r\n        System.out.println(\"Liste des créatures:\");\r\n        enclosure.getCreaturesInfo();\r\n    }\r\n\r\n    private void cleanEnclosure(Enclosure enclosure){\r\n        System.out.println(\"Nettoyer l'enclos: \" + enclosure.getName());\r\n    }\r\n    private void feedCreature(Enclosure enclosure){\r\n        System.out.println(\"Nourrir les créature de l'enclos: \" + enclosure.getName());\r\n    }\r\n    private void transferCreature(Enclosure sourceEnclosure, Enclosure destinationEnclosure, Creature creature) {\r\n        if (sourceEnclosure.getCreatures().contains(creature)) {\r\n            if (destinationEnclosure.getMAXIMUM_CREATURES() > destinationEnclosure.getCreatures().size()) {\r\n                System.out.println(\"Transférer la créature \" + creature.getName() + \" de l'enclos \"\r\n                        + sourceEnclosure.getName() + \" à l'enclos \" + destinationEnclosure.getName());\r\n\r\n                Creature removedCreature = sourceEnclosure.RemoveCreature(creature);\r\n\r\n                if (removedCreature != null) {\r\n                    destinationEnclosure.AddCreature(removedCreature);\r\n                }\r\n            } else {\r\n                System.out.println(\"Impossible de transférer la créature. L'enclos de destination est plein.\");\r\n            }\r\n        }\r\n        else {\r\n            System.out.println(\"Impossible de transférer la créature. La créature ne se trouve pas dans l'enclos sélectionné\");\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/models/Master.java b/src/main/java/models/Master.java
+--- a/src/main/java/models/Master.java	
++++ b/src/main/java/models/Master.java	
+@@ -33,7 +33,7 @@
+     }
+     private void transferCreature(Enclosure sourceEnclosure, Enclosure destinationEnclosure, Creature creature) {
+         if (sourceEnclosure.getCreatures().contains(creature)) {
+-            if (destinationEnclosure.getMAXIMUM_CREATURES() > destinationEnclosure.getCreatures().size()) {
++            if (!destinationEnclosure.isFull()) {
+                 System.out.println("Transférer la créature " + creature.getName() + " de l'enclos "
+                         + sourceEnclosure.getName() + " à l'enclos " + destinationEnclosure.getName());
+ 
+Index: src/main/java/controls/Command.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controls;\r\n\r\nimport java.lang.reflect.InvocationTargetException;\r\nimport java.lang.reflect.Method;\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\n\r\npublic class Command {\r\n    private final Map<String, Method> commands = new HashMap<>();\r\n    private String[] UserCommand;\r\n\r\n    public Map<String, Method> getCommands() {\r\n        return commands;\r\n    }\r\n\r\n    public Command() throws NoSuchMethodException {\r\n        commands.put(\"check\", Command.class.getMethod(\"check\"));\r\n        commands.put(\"clean\", Command.class.getMethod(\"clean\"));\r\n        commands.put(\"feed\", Command.class.getMethod(\"feed\"));\r\n        commands.put(\"transfer\", Command.class.getMethod(\"transfer\"));\r\n    }\r\n\r\n    public void processCommand(String[] userCommand) throws InvocationTargetException, IllegalAccessException {\r\n        if (commands.containsKey(userCommand[0])){\r\n            UserCommand = userCommand;\r\n            commands.get(userCommand[0]).invoke(null,userCommand);\r\n        }\r\n        else {\r\n            System.out.println(\"Cette commande n'existe pas. \\n\" +\r\n                    \"Tapez List_command pour avoir toutes les commandes disponibles\");\r\n        }\r\n    }\r\n\r\n    public void zizi(){}\r\n    //Permet d'examiner un enclos\r\n    //Commande utilisateur : check {nomEnclos}\r\n    public void check(){\r\n        if (UserCommand.length == 1){\r\n            System.out.print(\"Quel enclos voulez vous examiner ?\");\r\n        }\r\n        if (UserCommand.length == 2){\r\n            //Cherchez enclos\r\n            //Afficher\r\n        }\r\n        else {\r\n            System.out.println(\"Vous n'avez pas rentré le bon nombre d'agurment pour la commande\");\r\n        }\r\n    }\r\n\r\n    //Permet de nettoyer un enclos\r\n    //Commande utilisateur : clean {nomEnclos}\r\n    public void clean(){\r\n        if (UserCommand.length == 1){\r\n            System.out.print(\"Quel enclos voulez vous nettoyer ?\");\r\n        }\r\n        if (UserCommand.length == 2){\r\n            //Cherchez enclos\r\n            //Nettoyer\r\n        }\r\n        else {\r\n            System.out.println(\"Vous n'avez pas rentré le bon nombre d'agurment pour la commande\");\r\n        }\r\n    }\r\n\r\n    //Permet de nourrir les animaux d'un enclos\r\n    //Commande utilisateur : feed {nomEnclos} {nomFood}\r\n    public void feed(){\r\n        if (UserCommand.length == 1){\r\n            System.out.print(\"De quel enclos voulez vous nourrir les créatures ?\");\r\n        }\r\n        if (UserCommand.length == 3){\r\n            //Cherchez enclos\r\n            //Afficher\r\n        }\r\n        else {\r\n            System.out.println(\"Vous n'avez pas rentré le bon nombre d'agurment pour la commande\");\r\n        }\r\n    }\r\n\r\n    //Permet de transferer une créature d'un enclos à un autre\r\n    //Commande utilisateur : transfert {nomCreature} {nomEnclosDestination}\r\n    public void transfer(){\r\n        if (UserCommand.length == 1){\r\n            System.out.print(\"Quel créature voulez-vous déplacez ?\");\r\n        }\r\n        else if (UserCommand.length == 2){\r\n            System.out.println(\"Dans quel enclos ?\");\r\n        }\r\n        if (UserCommand.length == 3){\r\n            //Executer transfert\r\n        }\r\n        else {\r\n            System.out.println(\"Vous n'avez pas rentré le bon nombre d'agurment pour la commande\");\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/controls/Command.java b/src/main/java/controls/Command.java
+--- a/src/main/java/controls/Command.java	
++++ b/src/main/java/controls/Command.java	
+@@ -31,7 +31,6 @@
+         }
+     }
+ 
+-    public void zizi(){}
+     //Permet d'examiner un enclos
+     //Commande utilisateur : check {nomEnclos}
+     public void check(){
+Index: src/main/java/view/Menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/view/Menu.java b/src/main/java/view/Menu.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/view/Menu.java	
+@@ -0,0 +1,4 @@
++package view;
++
++public class Menu {
++}
