@@ -57,4 +57,7 @@ public class Master {
             System.out.println("Impossible de transférer la créature. La créature ne se trouve pas dans l'enclos sélectionné");
         }
     }
+    public String getName() {
+        return name;
+    }
 }
