@@ -9,6 +9,9 @@ public class Werewolf {
     private int level;
     private double impulsivenessFactor;
     private String pack;
+    private boolean isSolitary;
+    private boolean isAlphaCouple;
+    private int numberOfOffspring;
     public Werewolf(String gender, String ageCategory, int strength, int dominationExerted, int dominationSuffered,
                     int dominationRank, double impulsivenessFactor, String pack) {
         this.gender = gender;
@@ -20,6 +23,9 @@ public class Werewolf {
         this.impulsivenessFactor = impulsivenessFactor;
         this.pack = pack;
         this.level = calculateLevel();
+        this.isSolitary = false;
+        this.isAlphaCouple = false;
+        this.numberOfOffspring = 0;
 
         if (pack.equals("AlphaMale")) {
             this.gender = "male_alpha";
@@ -57,6 +63,38 @@ public class Werewolf {
 
     public void increaseDominationRank() {
         dominationRank++;
+    }
+
+    public boolean isSolitary() {
+        return isSolitary;
+    }
+
+    public void becomeSolitary() {
+        isSolitary = true;
+    }
+
+    public void joinPack() {
+        isSolitary = false;
+    }
+
+    public boolean isAlphaCouple() {
+        return isAlphaCouple;
+    }
+
+    public void becomeAlphaCouple() {
+        isAlphaCouple = true;
+    }
+
+    public int getNumberOfOffspring() {
+        return numberOfOffspring;
+    }
+
+    public void reproduce() {
+        if (isAlphaCouple && numberOfOffspring < 7) {
+            int numberOfNewOffspring = (int) (Math.random() * 7) + 1;
+            numberOfOffspring += numberOfNewOffspring;
+            System.out.println("The alpha couple has produced " + numberOfNewOffspring + " offspring!");
+        }
     }
 
     public void exchangeRanks(Werewolf other) {

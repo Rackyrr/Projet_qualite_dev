@@ -53,6 +53,39 @@ public class WerewolfPack {
         }
     }
 
+    public void disperseSolitaries() {
+        List<Werewolf> solitaries = new ArrayList<>();
+        for (Werewolf member : members) {
+            if (member.isSolitary()) {
+                solitaries.add(member);
+            }
+        }
+
+        if (solitaries.size() >= 2) {
+            Werewolf newAlphaMale = findAlpha(solitaries, "male");
+            Werewolf newAlphaFemale = findAlpha(solitaries, "female");
+
+            if (newAlphaMale != null && newAlphaFemale != null) {
+                WerewolfPack newPack = new WerewolfPack(newAlphaMale, newAlphaFemale);
+                for (Werewolf member : solitaries) {
+                    member.joinPack();
+                    newPack.addWerewolf(member);
+                }
+                members.removeAll(solitaries);
+            }
+        }
+    }
+
+    private Werewolf findAlpha(List<Werewolf> candidates, String gender) {
+        Werewolf alpha = null;
+        for (Werewolf candidate : candidates) {
+            if (candidate.getGender().equals(gender) && (alpha == null || candidate.getStrength() > alpha.getStrength())) {
+                alpha = candidate;
+            }
+        }
+        return alpha;
+    }
+
     private Werewolf findAlphaFemale() {
         Werewolf newAlphaFemale = alphaFemale;
         for (Werewolf member : members) {
@@ -62,6 +95,14 @@ public class WerewolfPack {
             }
         }
         return newAlphaFemale;
+    }
+
+    public void reproduceInAlphaCouple() {
+        for (Werewolf member : members) {
+            if (member.isAlphaCouple()) {
+                member.reproduce();
+            }
+        }
     }
 
     public void displayPackHierarchy() {
