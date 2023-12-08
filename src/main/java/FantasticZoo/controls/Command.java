@@ -99,12 +99,14 @@ public class Command implements Menu {
                     System.out.println(enclosure.getName());
                 }
             }
-            for (Enclosure enclosure : zoo.getEnclosurelist()){
-                if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
-                    master.examineEnclosure(enclosure);
-                }
-                else {
-                    Menu.enclosureNotFound(UserCommand[1]);
+            else {
+                for (Enclosure enclosure : zoo.getEnclosurelist()){
+                    if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
+                        master.examineEnclosure(enclosure);
+                    }
+                    else {
+                        Menu.enclosureNotFound(UserCommand[1]);
+                    }
                 }
             }
         }
@@ -273,52 +275,53 @@ public class Command implements Menu {
         if (UserCommand.length == 2) {
             for (Class item : BuyClass){
                 if (UserCommand[1].equalsIgnoreCase(item.getSimpleName())){
-                    Menu.Buying(1, Creature.class.isAssignableFrom(item));
-                    String nameObject = scan.nextLine();
-                    if (Creature.class.isAssignableFrom(item)){
-                        if (!zoo.getEnclosurelist().isEmpty()){
-                            Menu.Buying(2, Creature.class.isAssignableFrom(item));
-                            Gender gender;
-                            do {
-                                String GenderStr = scan.nextLine();
-                                if (GenderStr.equalsIgnoreCase("h")){
-                                    gender = Gender.MALE;
-                                    break;
-                                }
-                                else if (GenderStr.equalsIgnoreCase("f")) {
-                                    gender = Gender.FEMALE;
-                                    break;
-                                }
-                                else
-                                    Menu.CreateMaster(-3);
-                            } while (true);
-                            Menu.Buying(3, Creature.class.isAssignableFrom(item));
-                            Menu.AllEnclosure(zoo);
-                            boolean IsFound = false;
-                            while (!IsFound){
-                                String EnclosName = scan.nextLine();
-                                for (Enclosure enclosure : zoo.getEnclosurelist()){
-                                    if (EnclosName.equalsIgnoreCase(enclosure.getName())){
-                                        try {
-                                            Constructor constructor = item.getDeclaredConstructor(Enclosure.class,Gender.class, String.class);
-                                            Creature newCreature = (Creature) constructor.newInstance(enclosure, gender, nameObject);
-                                            enclosure.AddCreature(newCreature);
-                                            System.out.println("Vous avez bien acheté la créature " + newCreature.getName()
-                                                    + " qui est " + newCreature.getClass().getName());
-                                            CommandItemFound = true;
-                                            IsFound = true;
-                                        } catch (NoSuchMethodException e) {
-                                            throw new RuntimeException(e);
-                                        }
+                    if (zoo.getEnclosurelist().isEmpty() && Creature.class.isAssignableFrom(item)){
+                        System.out.println("Vous n'avez aucun enclos pour pouvoir le mettre");
+                        CommandItemFound = true;
+                    }
+                    else if (!zoo.getEnclosurelist().isEmpty() && Creature.class.isAssignableFrom(item)) {
+                        Menu.Buying(1, Creature.class.isAssignableFrom(item));
+                        String nameObject = scan.nextLine();
+                        Menu.Buying(2, Creature.class.isAssignableFrom(item));
+                        Gender gender;
+                        do {
+                            String GenderStr = scan.nextLine();
+                            if (GenderStr.equalsIgnoreCase("h")){
+                                gender = Gender.MALE;
+                                break;
+                            }
+                            else if (GenderStr.equalsIgnoreCase("f")) {
+                                gender = Gender.FEMALE;
+                                break;
+                            }
+                            else
+                                Menu.CreateMaster(-3);
+                        } while (true);
+                        Menu.Buying(3, Creature.class.isAssignableFrom(item));
+                        Menu.AllEnclosure(zoo);
+                        boolean IsFound = false;
+                        while (!IsFound){
+                            String EnclosName = scan.nextLine();
+                            for (Enclosure enclosure : zoo.getEnclosurelist()){
+                                if (EnclosName.equalsIgnoreCase(enclosure.getName())){
+                                    try {
+                                        Constructor constructor = item.getDeclaredConstructor(Enclosure.class,Gender.class, String.class);
+                                        Creature newCreature = (Creature) constructor.newInstance(enclosure, gender, nameObject);
+                                        enclosure.AddCreature(newCreature);
+                                        System.out.println("Vous avez bien acheté la créature " + newCreature.getName()
+                                                + " qui est " + newCreature.getClass().getSimpleName());
+                                        CommandItemFound = true;
+                                        IsFound = true;
+                                    } catch (NoSuchMethodException e) {
+                                        throw new RuntimeException(e);
                                     }
                                 }
                             }
                         }
-                        else {
-                            System.out.println("Vous n'avez pas encore d'enclos où mettre vos créatures.");
-                        }
                     }
-                    else if (!Creature.class.isAssignableFrom(item)){
+                    if (!Creature.class.isAssignableFrom(item)){
+                        Menu.Buying(1, Creature.class.isAssignableFrom(item));
+                        String nameObject = scan.nextLine();
                         Menu.Buying(2,Creature.class.isAssignableFrom(item));
                         String NomCreature = scan.nextLine();
                         for (Class classs : BuyClass){

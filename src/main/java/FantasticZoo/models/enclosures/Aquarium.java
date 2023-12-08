@@ -30,10 +30,15 @@ public class Aquarium extends Enclosure{
         this.Depth = (int) (Math.random() *MAX_DEPTH);
     }
 
+    public Aquarium(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES, double depth) {
+        super(AUTHORIZED_ANIMAL, name, area, MAXIMUM_CREATURES);
+        this.Depth = depth;
+    }
+
     @Override
     public String toString() {
         return "L'aquarium " + this.getName() + "a une surface de " + this.getArea() + " m² et une profondeur de "+
-                Depth + "m, il y a " + this.getCreatures().size() + this.getAUTHORIZED_ANIMAL().getName() + " et "
+                Depth + "m, il y a " + this.getCreatures().size() + this.getAUTHORIZED_ANIMAL().getSimpleName() + " et "
                 + this.getEggs().size() + " oeufs";
     }
 

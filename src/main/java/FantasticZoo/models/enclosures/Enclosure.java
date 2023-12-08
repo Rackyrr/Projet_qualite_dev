@@ -67,6 +67,13 @@ public class Enclosure implements Runnable {
     }
 
     //Modifier constructeur pour mettre degré de propreté par défaut
+    public Enclosure(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES) {
+        this.AUTHORIZED_ANIMAL = AUTHORIZED_ANIMAL;
+        this.name = name;
+        this.area = area;
+        this.creatures = new ArrayList<>(MAXIMUM_CREATURES);
+        this.eggs = new ArrayList<>(MAXIMUM_CREATURES);
+    }
     public Enclosure(Class AUTHORIZED_ANIMAL, String name) {
         this.AUTHORIZED_ANIMAL = AUTHORIZED_ANIMAL;
         this.name = name;

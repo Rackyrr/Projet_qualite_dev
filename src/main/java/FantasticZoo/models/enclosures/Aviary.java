@@ -26,6 +26,7 @@ public class Aviary extends Enclosure {
         CleanLevelRoof = cleanLevelRoof;
     }
 
+
     public Aviary(Class AUTHORIZED_ANIMAL, String name) {
         super(AUTHORIZED_ANIMAL, name);
         this.Height = (int) (Math.random()*MAX_HEIGHT);
@@ -33,10 +34,17 @@ public class Aviary extends Enclosure {
         this.setEggs(new ArrayList<>(this.getMAXIMUM_CREATURES()));
     }
 
+    public Aviary(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES, double Height) {
+        super(AUTHORIZED_ANIMAL, name, area, MAXIMUM_CREATURES);
+        this.Height = Height;
+        this.setCreatures(new ArrayList<>(this.getMAXIMUM_CREATURES()));
+        this.setEggs(new ArrayList<>(this.getMAXIMUM_CREATURES()));
+    }
+
     @Override
     public String toString() {
         return "La volière " + this.getName() + " a une surface de " + this.getArea() + " m² et une hauteur de "+
-                Height + "m, il y a " + this.getCreatures().size() + this.getAUTHORIZED_ANIMAL().getName() + " et "
+                Height + "m, il y a " + this.getCreatures().size() + this.getAUTHORIZED_ANIMAL().getSimpleName() + " et "
                 + this.getEggs().size() + " oeufs";
     }
 
