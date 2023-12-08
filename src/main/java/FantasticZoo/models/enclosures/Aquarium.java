@@ -6,6 +6,7 @@ import FantasticZoo.models.creatures.ISwimming;
 
 public class Aquarium extends Enclosure{
     private double Depth;
+    private final static int MAX_DEPTH = 200;
     private CleanlinessLevel CleanLevelWater;
 
     public double getDepth() {
@@ -24,9 +25,9 @@ public class Aquarium extends Enclosure{
         CleanLevelWater = cleanLevelWater;
     }
 
-    public Aquarium(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES, double depth) {
-        super(AUTHORIZED_ANIMAL, name, area, MAXIMUM_CREATURES);
-        this.Depth = depth;
+    public Aquarium(Class AUTHORIZED_ANIMAL, String name) {
+        super(AUTHORIZED_ANIMAL, name);
+        this.Depth = (int) (Math.random() *MAX_DEPTH);
     }
 
     @Override
