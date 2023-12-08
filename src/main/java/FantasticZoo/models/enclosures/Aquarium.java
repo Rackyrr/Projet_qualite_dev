@@ -9,27 +9,56 @@ public class Aquarium extends Enclosure{
     private final static int MAX_DEPTH = 200;
     private CleanlinessLevel CleanLevelWater;
 
+    /**
+     *
+     * @return
+     */
     public double getDepth() {
         return Depth;
     }
 
+    /**
+     *
+     * @param depth
+     */
     public void setDepth(double depth) {
         Depth = depth;
     }
 
+    /**
+     *
+     * @return
+     */
     public CleanlinessLevel getCleanLevelWater() {
         return CleanLevelWater;
     }
 
+    /**
+     *
+     * @param cleanLevelWater
+     */
     public void setCleanLevelWater(CleanlinessLevel cleanLevelWater) {
         CleanLevelWater = cleanLevelWater;
     }
 
+    /**
+     *
+     * @param AUTHORIZED_ANIMAL
+     * @param name
+     */
     public Aquarium(Class AUTHORIZED_ANIMAL, String name) {
         super(AUTHORIZED_ANIMAL, name);
         this.Depth = (int) (Math.random() *MAX_DEPTH);
     }
 
+    /**
+     *
+     * @param AUTHORIZED_ANIMAL
+     * @param name
+     * @param area
+     * @param MAXIMUM_CREATURES
+     * @param depth
+     */
     public Aquarium(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES, double depth) {
         super(AUTHORIZED_ANIMAL, name, area, MAXIMUM_CREATURES);
         this.Depth = depth;
@@ -42,6 +71,11 @@ public class Aquarium extends Enclosure{
                 + this.getEggs().size() + " oeufs";
     }
 
+    /**
+     *
+     * @param creature
+     * @return
+     */
     @Override
     public boolean AddCreature(Creature creature){
         if (IsAuhorizedAnimal(creature) && creature instanceof ISwimming){

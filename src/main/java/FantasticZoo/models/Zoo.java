@@ -19,6 +19,12 @@ public class Zoo {
     private ArrayList<Enclosure> enclosurelist;
 
 
+    /**
+     *
+     * @param name
+     * @param fantasticMaster
+     * @param numberMaxEnclosure
+     */
     private Zoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
         this.name = name;
         this.fantasticMaster = fantasticMaster;
@@ -26,13 +32,19 @@ public class Zoo {
         this.numberMaxEnclosure = numberMaxEnclosure;
     }
 
+    /**
+     *
+     * @param name
+     * @param fantasticMaster
+     * @param numberMaxEnclosure
+     * @return
+     */
     public static Zoo getZoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
         if (zoo == null) {
             zoo = new Zoo(name, fantasticMaster, numberMaxEnclosure);
         }
         return zoo;
     }
-
     public void displayAllZooCreature(){
         int totalZooCreature = 0;
         for (Enclosure enclos : enclosurelist) {
@@ -51,7 +63,6 @@ public class Zoo {
         }
         return threads;
     }
-
     public void displayEnclosureAllCreature(){
         int totalEnclosureCreature = 0;
         for (Enclosure enclos : enclosurelist){
@@ -60,34 +71,66 @@ public class Zoo {
         System.out.println("Créatures de tous les enclos : " + totalEnclosureCreature);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public Master getFantasticMaster() {
         return fantasticMaster;
     }
 
+    /**
+     *
+     * @param fantasticMaster
+     */
     public void setFantasticMaster(Master fantasticMaster) {
         this.fantasticMaster = fantasticMaster;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumberMaxEnclosure() {
         return numberMaxEnclosure;
     }
 
+    /**
+     *
+     * @param numberMaxEnclosure
+     */
     public void setNumberMaxEnclosure(int numberMaxEnclosure) {
         this.numberMaxEnclosure = numberMaxEnclosure;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Enclosure> getEnclosurelist() {
         return enclosurelist;
     }
 
+    /**
+     *
+     * @param enclosurelist
+     */
     public void setEnclosurelist(ArrayList<Enclosure> enclosurelist) {
         this.enclosurelist = enclosurelist;
     }

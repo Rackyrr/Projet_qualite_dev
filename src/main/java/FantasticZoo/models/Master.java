@@ -17,6 +17,13 @@ public class Master {
         this.gender = gender;
     }
 
+    /**
+     *
+     * @param name
+     * @param age
+     * @param gender
+     * @return
+     */
     public static Master getMaster(String name, int age, Gender gender){
         if (master == null){
             master = new Master(name, age, gender);
@@ -24,6 +31,10 @@ public class Master {
         return master;
     }
 
+    /**
+     *
+     * @param enclosure
+     */
     public void examineEnclosure(Enclosure enclosure) {
         // Afficher les caractéristiques de l'enclos et la liste des créatures
         System.out.println("Caractéristiques de l'enclos:");
@@ -32,12 +43,28 @@ public class Master {
         enclosure.getCreaturesInfo();
     }
 
+    /**
+     *
+     * @param enclosure
+     */
     public void cleanEnclosure(Enclosure enclosure){
         System.out.println("Nettoyer l'enclos: " + enclosure.getName());
     }
+
+    /**
+     *
+     * @param enclosure
+     */
     public void feedEnclosure(Enclosure enclosure){
         System.out.println("Nourrir les créature de l'enclos: " + enclosure.getName());
     }
+
+    /**
+     *
+     * @param sourceEnclosure
+     * @param destinationEnclosure
+     * @param creature
+     */
     public void transferCreature(Enclosure sourceEnclosure, Enclosure destinationEnclosure, Creature creature) {
         if (sourceEnclosure.getCreatures().contains(creature)) {
             if (destinationEnclosure.isFull()) {
@@ -57,6 +84,11 @@ public class Master {
             System.out.println("Impossible de transférer la créature. La créature ne se trouve pas dans l'enclos sélectionné");
         }
     }
+
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }

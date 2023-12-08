@@ -23,12 +23,15 @@ public interface Menu {
                     Tapez help pour avoir des informations sur les commandes.
                     """);
     }
-
     public static void commandNotFound(){
         System.out.println("Cette commande n'existe pas. \n" +
                 "Tapez help pour avoir toutes les commandes disponibles");
     }
 
+    /**
+     *
+     * @param enclosureName
+     */
     public static void enclosureNotFound(String enclosureName) {
         System.out.println("Il n'y a pas d'enclos nommé : " + enclosureName);
     }
@@ -45,6 +48,11 @@ public interface Menu {
         System.out.print("Quel enclos voulez vous nettoyer ?");
     }
 
+    /**
+     *
+     * @param cleanlinessLevel
+     * @param typeEnclos
+     */
     public static void CheckCleanlinessLevelMessage(CleanlinessLevel cleanlinessLevel, Class typeEnclos) {
         if (typeEnclos.getName().equals("Enclosure")) {
             if (cleanlinessLevel.equals(CleanlinessLevel.GREAT)) {
@@ -75,6 +83,10 @@ public interface Menu {
         }
     }
 
+    /**
+     *
+     * @param ObjectRename
+     */
     public static void confirmRename(boolean ObjectRename) {
         if (ObjectRename) {
             //enclos
@@ -87,6 +99,10 @@ public interface Menu {
         System.out.println("Il n'y a plus de place dans cet enclos");
     }
 
+    /**
+     *
+     * @param typeEnclos
+     */
     public static void creatureNotSameSpecie(Class typeEnclos) {
         if (typeEnclos.getName().equals("Enclosure")) {
             System.out.println("Cette créature ne peut pas aller dans cet enclos, elle ne serait pas avec son espèce. \n" +
@@ -136,6 +152,10 @@ public interface Menu {
                         """);
     }
 
+    /**
+     *
+     * @param etape
+     */
     public static void CreateMaster(int etape){
         if (etape == 1) {
             System.out.println(
@@ -160,6 +180,11 @@ public interface Menu {
     public static void CreateZoo(){
         System.out.println("Maintenant, quel nom voulez vous donner à votre zoo fanstastique ?");
     }
+
+    /**
+     *
+     * @param master
+     */
     public static void Intro(Master master) {
         System.out.println("=== Bienvenue dans le Zoo Fantastique ===");
         System.out.println("Félicitations, " + master.getName() + " ! Vous venez de créer votre propre zoo magique.");
@@ -204,6 +229,11 @@ public interface Menu {
                         """);
     }
 
+    /**
+     *
+     * @param etape
+     * @param IsCreature
+     */
     public static void Buying(int etape, boolean IsCreature){
         if (IsCreature){
             if (etape == 1){
@@ -226,6 +256,10 @@ public interface Menu {
         }
     }
 
+    /**
+     *
+     * @param zoo
+     */
     public static void AllEnclosure(Zoo zoo){
         for (Enclosure enclosure : zoo.getEnclosurelist()) {
             System.out.println(enclosure.getName());

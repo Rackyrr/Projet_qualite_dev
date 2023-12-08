@@ -15,6 +15,13 @@ public class Game implements Menu {
     private static Zoo zoo;
     private static Command command;
 
+    /**
+     *
+     * @param args
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         SetupGame();
         Menu.promptMenu();
@@ -23,6 +30,11 @@ public class Game implements Menu {
         }
     }
 
+    /**
+     *
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     public static void WaitForCommand() throws InvocationTargetException, IllegalAccessException {
         Scanner sc = new Scanner(System.in);
         do {
@@ -34,6 +46,10 @@ public class Game implements Menu {
         }while (true);
     }
 
+    /**
+     *
+     * @throws NoSuchMethodException
+     */
     public static void SetupGame() throws NoSuchMethodException {
         CreationMaster();
         CreationZoo();
