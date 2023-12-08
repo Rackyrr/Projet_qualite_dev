@@ -26,14 +26,32 @@ public class Command implements Menu {
     private ArrayList<Class> BuyClass;
     private boolean ExitCommand;
 
+    /**
+     * Retrieves the map of commands.
+     *
+     * @return Returns a map of commands, where the keys are the command names and the values are the corresponding Method objects.
+     */
     public Map<String, Method> getCommands() {
         return commands;
     }
 
+    /**
+     * Checks if the current command is an exit command.
+     *
+     * @return true if the command is an exit command, false otherwise
+     */
     public boolean isExitCommand() {
         return ExitCommand;
     }
 
+    /**
+     * Represents a command that can be executed by the user in the zoo management system.
+     * Each command is associated with a specific action and can be invoked by the user.
+     *
+     * @param master The master controlling the zoo.
+     * @param zoo The zoo being managed.
+     * @throws NoSuchMethodException If a specified method cannot be found.
+     */
     private Command(Master master, Zoo zoo) throws NoSuchMethodException {
         //ajout des commandes dans l'arrayList
         commands.put("check", Command.class.getMethod("check"));
@@ -65,6 +83,14 @@ public class Command implements Menu {
 
     }
 
+    /**
+     * Retrieves the Command instance. If it does not exist, creates a new Command instance using the given Master and Zoo parameters.
+     *
+     * @param master The master controlling the zoo.
+     * @param zoo The zoo being managed.
+     * @return Returns the Command instance.
+     * @throws NoSuchMethodException If a specified method cannot be found.
+     */
     public static Command getCommand(Master master, Zoo zoo) throws NoSuchMethodException {
         if (command == null){
             command = new Command(master, zoo);
@@ -72,6 +98,14 @@ public class Command implements Menu {
         return command;
     }
 
+    /**
+     * Executes the user command and returns the result.
+     *
+     * @param userCommand The command provided by the user as an array of Strings. The first element of the array should be the command name.
+     * @return true if the command was successfully executed, false otherwise.
+     * @throws InvocationTargetException If the invoked command throws an exception.
+     * @throws IllegalAccessException If the invoked command cannot be accessed.
+     */
     public boolean processCommand(String[] userCommand) throws InvocationTargetException, IllegalAccessException {
         if (commands.containsKey(userCommand[0])){
             UserCommand = userCommand;
@@ -84,8 +118,10 @@ public class Command implements Menu {
         }
     }
 
-    //Permet d'examiner un enclos
-    //Commande utilisateur : check {nomEnclos}
+    /**
+     * Examines an enclosure.
+     * User command: check {enclosureName}
+     */
     public void check(){
         if (UserCommand.length == 1){
             System.out.print("Quel enclos voulez vous examiner ? \n");
@@ -115,8 +151,14 @@ public class Command implements Menu {
         }
     }
 
-    //Permet de nettoyer un enclos
-    //Commande utilisateur : clean {nomEnclos}
+
+    /**
+     * Cleans the zoo enclosures based on the user command.
+     * If the command has one argument, it asks what enclosure to clean.
+     * If the command has two arguments, it cleans the specified enclosure.
+     * If the command has more than two arguments, it displays a typo message.
+     * User command : clean {nomEnclos}
+     */
     public void clean(){
         if (UserCommand.length == 1){
             Menu.cleanEnclosureMessage();
@@ -136,8 +178,14 @@ public class Command implements Menu {
         }
     }
 
-    //Permet de nourrir les animaux d'un enclos
-    //Commande utilisateur : feed {nomEnclos}
+
+    /**
+     * Feeds the animals in the zoo.
+     * If the user command has only one argument, it asks what enclosure to feed.
+     * If the user command has two arguments, it feeds the specified enclosure.
+     * If the user command has more than two arguments, it displays a typo message.
+     * Commande utilisateur : feed {nomEnclos}
+     */
     public void feed(){
         if (UserCommand.length == 1){
             Menu.feedEnclosureMessage();
@@ -157,8 +205,19 @@ public class Command implements Menu {
         }
     }
 
-    //Permet de transferer une créature d'un enclos à un autre
-    //Commande utilisateur : transfert {nomCreature} {nomEnclosSource} {nomEnclosDestination}
+
+    /**
+     * Transfers a creature from one enclosure to another enclosure in the zoo.
+     * This method handles the different cases based on the length of the user command array.
+     * If the user command length is 1, it prompts the user to specify which creature to move.
+     * If the user command length is 2, it prompts the user to specify the source enclosure.
+     * If the user command length is 3, it prompts the user to specify the destination enclosure.
+     * If the user command length is 4, it finds the source and destination enclosures,
+     * and for specified creature in the source enclosure, it transfers the creature to the destination enclosure
+     * using the master's transferCreature() method.
+     * If the user command length is not within the above valid lengths, it displays a typo message.
+     * Commande utilisateur : transfert {nomCreature} {nomEnclosSource} {nomEnclosDestination}
+     */
     public void transfer(){
         if (UserCommand.length == 1){
             System.out.print("Quel créature voulez-vous déplacez ?");
@@ -203,44 +262,51 @@ public class Command implements Menu {
         }
     }
 
-    //Permet de renommer une créature
-    //Commande utilisateur : rename {NomCreature/Enclos} {NewName}
-    public void rename(){
-        if (UserCommand.length == 1){
+    /**
+     * Renames an enclosure or a creature in the zoo based on the user command.
+     * If the user command has one argument, it prompts the user to specify what to rename.
+     * If the user command has two arguments, it prompts the user to specify the new name.
+     * If the user command has three arguments, it searches for the specified enclosure or creature
+     * and renames it with the given new name.
+     * If the user command has more than three arguments, it displays a typo message.
+     * User command: rename {name} {newName}
+     */
+    public void rename() {
+        if (UserCommand.length == 1) {
             System.out.print("Qu'est ce que vous voulez renommer ?");
-        }
-        else if (UserCommand.length == 2){
+        } else if (UserCommand.length == 2) {
             System.out.println("Quel nom voulez vous lui attribuer ?");
-        }
-        else if (UserCommand.length == 3){
+        } else if (UserCommand.length == 3) {
             Enclosure enclosureRename = null;
             Creature creatureRename = null;
-            for (Enclosure enclosure : zoo.getEnclosurelist()){
-                if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
+            for (Enclosure enclosure : zoo.getEnclosurelist()) {
+                if (enclosure.getName().equalsIgnoreCase(UserCommand[1])) {
                     enclosureRename = enclosure;
                     enclosureRename.setName((UserCommand[2]));
                     break;
                 }
-                for (Creature creature : enclosure.getCreatures()){
-                    if (creature.getName().equalsIgnoreCase(UserCommand[1])){
+                for (Creature creature : enclosure.getCreatures()) {
+                    if (creature.getName().equalsIgnoreCase(UserCommand[1])) {
                         creatureRename = creature;
                         creatureRename.setName(UserCommand[2]);
                         break;
                     }
                 }
-                if (creatureRename != null){
+                if (creatureRename != null) {
                     creatureRename.setName(UserCommand[2]);
                     break;
                 }
             }
-        }
-        else {
+        } else {
             Menu.typo();
         }
     }
 
-    //Permet d'afficher toutes les commandes disponibles
-    //Commande utilisateur : help
+    /**
+     * Displays the available commands or prompts the user to fix a typo.
+     * If the user command length is not equal to 1, it calls the typo method in the Menu class.
+     * Otherwise, it calls the ShowCommandList method in the Menu class.
+     */
     public void help(){
         if (UserCommand.length != 1){
             Menu.typo();
@@ -250,7 +316,11 @@ public class Command implements Menu {
         }
     }
 
-    //Permet de quitter le jeu :
+    /**
+     * Exits the zoo management system.
+     * The method prompts the user with a confirmation message asking if they are sure they want to exit.
+     * If the user enters 'Y' or 'y', the ExitCommand flag is set to true.
+     */
     public void exit() {
         System.out.println("Êtes vous sûr de vouloir quitter ? \n" +
                 "Votre progression ne sera pas sauvergardée (Y/N)");
@@ -260,6 +330,11 @@ public class Command implements Menu {
         }
     }
 
+    /**
+     * Executes the store command.
+     * If the user command length is 1, it invokes the {@link Menu#ShowStore()} method to display the store.
+     * If the user command length is not equal to 1, it displays a typo message using the {@link Menu#typo()} method.
+     */
     public void store(){
         if (UserCommand.length == 1){
             Menu.ShowStore();
@@ -270,6 +345,20 @@ public class Command implements Menu {
     }
 
 
+    /**
+     * Executes the buy command, which allows the user to purchase creatures or enclosures in the zoo.
+     * The method handles different cases based on the length of the user command array.
+     * If the user command length is 2 and the specified item is a creature, it prompts the user to provide the necessary information and creates a new creature instance.
+     * If the user command length is 2 and the specified item is not a creature, it prompts the user to provide the necessary information and creates a new enclosure instance.
+     * If the user command length is not equal to 2, it displays a typo message.
+     *
+     * @throws InvocationTargetException
+     *         If the invoked constructor throws an exception.
+     * @throws InstantiationException
+     *         If a new instance of the specified class cannot be created.
+     * @throws IllegalAccessException
+     *         If the constructor cannot be accessed.
+     */
     public void buy() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         boolean CommandItemFound = false;
         if (UserCommand.length == 2) {
