@@ -1,147 +1,111 @@
 package Colony;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WerewolfPack {
-    private Werewolf alphaMale;
-    private Werewolf alphaFemale;
-    private List<Werewolf> members;
+    private List<Werewolf> males;
+    private List<Werewolf> females;
 
-    public WerewolfPack(Werewolf alphaMale, Werewolf alphaFemale) {
-        this.alphaMale = alphaMale;
-        this.alphaFemale = alphaFemale;
-        this.members = new ArrayList<>();
-        initializePack();
+    public WerewolfPack() {
+        this.males = new ArrayList<>();
+        this.females = new ArrayList<>();
     }
 
-    private void initializePack() {
-        members.add(alphaMale);
-        members.add(alphaFemale);
+    public void addWerewolf(Werewolf werewolf) {
+        if (werewolf.getGender().equals("M")) {
+            males.add(werewolf);
+        } else {
+            females.add(werewolf);
+        }
+        Collections.sort(males, (w1, w2) -> w1.getDominationRank() - w2.getDominationRank());
+        Collections.sort(females, (w1, w2) -> w1.getDominationRank() - w2.getDominationRank());
     }
 
-    public void displayPackCharacteristics() {
-        System.out.println("Caractéristiques du pack:");
-        System.out.println("Male alpha: " + alphaMale.getGender() + " - " + alphaMale.getStrength());
-        System.out.println("\n" + "Femelle Alpha: " + alphaFemale.getGender() + " - " + alphaFemale.getStrength());
-        System.out.println("Nombres de membres: " + (members.size() - 2));
-        System.out.println("Nombre de descendants: " + alphaFemale.getNumberOfOffspring());
+    public void displayHierarchy() {
+        System.out.println("Hiérarchie de la meute :");
+        displayGenderHierarchy("Mâles", males);
+        displayGenderHierarchy("Femelles", females);
     }
 
-    public void displayMembersCharacteristics() {
-        System.out.println("Members Characteristics:");
-        for (Werewolf member : members) {
-            if (member != alphaMale && member != alphaFemale) {
-                System.out.println(member.getGender() + " - " + member.getStrength());
-            }
+    private void displayGenderHierarchy(String gender, List<Werewolf> wolves) {
+        System.out.println(gender + ":");
+        for (Werewolf werewolf : wolves) {
+            System.out.println("Loup garou " + werewolf.getGender() + " de rang " + getRankSymbol(werewolf));
         }
     }
 
-    public void createNewHierarchy(List<Werewolf> newHierarchy) {
-        members.clear();
-        alphaMale = null;
-        alphaFemale = null;
+    private char getRankSymbol(Werewolf werewolf) {
+        char symbol = (char) ('α' + males.indexOf(werewolf) + females.size());
+        return symbol <= 'ω' ? symbol : 'ω';
+    }
 
-        for (Werewolf werewolf : newHierarchy) {
+    public void makeOmega(Werewolf werewolf) {
+        if (!isOmega(werewolf)) {
+            if (werewolf.getGender().equals("M")) {
+                males.remove(werewolf);
+            } else {
+                females.remove(werewolf);
+            }
+            werewolf.setDominationRank('ω');
             addWerewolf(werewolf);
         }
     }
 
-    public void constituteAlphaCouple(Werewolf newAlphaMale) {
-        if (newAlphaMale != null) {
-            if (alphaMale != null) {
-                alphaMale.removeAlphaCouple();
-            }
-            alphaMale = newAlphaMale;
-            alphaMale.becomeAlphaCouple();
-            adjustHierarchy(alphaMale);
-        }
+    public boolean isOmega(Werewolf werewolf) {
+        return werewolf.getDominationRank() == 'ω';
     }
 
-    public void reproduceInAlphaCouple() {
-        for (Werewolf member : members) {
-            if (member.isAlphaCouple()) {
-                member.reproduce();
-            }
-        }
+    public List<Werewolf> getMales() {
+        return males;
     }
 
-    public void decreaseDominationRanksNaturally() {
-        for (Werewolf member : members) {
-            member.decreaseDominationRankNaturally();
-        }
+    public List<Werewolf> getFemales() {
+        return females;
     }
-
-    public void declareOmegaWerewolves() {
-        for (Werewolf member : members) {
-            if (member.getStrength() < calculateAverageStrength() / 2) {
-                member.declareOmega();
-            }
-        }
+    public void showAggression(Werewolf aggressor, Werewolf victim) {
+        System.out.println(aggressor.getGender() + " " + aggressor.getDominationRank() +
+                " se montre agressif envers " + victim.getGender() + " " + victim.getDominationRank());
     }
-
-    public void addWerewolves(List<Werewolf> newMembers) {
-        for (Werewolf newMember : newMembers) {
-            addWerewolf(newMember);
-        }
-    }
-
-    public void removeWerewolf(Werewolf werewolf) {
-        if (werewolf != null) {
-            members.remove(werewolf);
-        }
-    }
-
-    private double calculateAverageStrength() {
-        double totalStrength = 0;
-        for (Werewolf member : members) {
-            totalStrength += member.getStrength();
-        }
-        return totalStrength / members.size();
-    }
-
-    private void addWerewolf(Werewolf werewolf) {
-        members.add(werewolf);
-        adjustHierarchy(werewolf);
-    }
-
-    private void adjustHierarchy(Werewolf werewolf) {
-        if (werewolf != alphaMale && werewolf != alphaFemale) {
-            if (werewolf.getDominationRank() >= alphaMale.getStrength() * alphaMale.getImpulsivenessFactor()
-                    && !werewolf.getGender().equals("Femelle Alpha")) {
-                performDomination(werewolf);
+    public void attemptDomination(Werewolf aggressor, Werewolf victim) {
+        if (aggressor.getStrength() >= victim.getStrength() * aggressor.getImpulsivenessFactor()
+                && victim.getDominationRank() != 'α') {
+            if (aggressor.getDominationRank() > victim.getDominationRank()
+                    || victim.getDominationRank() == 'ω') {
+                accomplishDomination(aggressor, victim);
             } else {
-                werewolf.setDominationRank(werewolf.getDominationRank() - 1);
+                this.showAggression(aggressor,victim);
             }
+        } else {
+            System.out.println(aggressor.getGender() + " " + aggressor.getDominationRank()
+                    + " a échoué à dominer " + victim.getGender() + " " + victim.getDominationRank());
         }
     }
 
-    private void performDomination(Werewolf aggressor) {
-        for (Werewolf target : members) {
-            if (target != aggressor && target.getStrength() < aggressor.getStrength()
-                    && !target.getGender().equals("Femelle Alpha")) {
-                aggressor.increaseDominationRank();
-                aggressor.exchangeRanks(target);
-                target.decreaseDominationRank();
+    public void accomplishDomination(Werewolf aggressor, Werewolf target) {
+        this.increaseDominationFactor(aggressor);
+        int tempRank = aggressor.getDominationRank();
+        aggressor.setDominationRank(target.getDominationRank());
+        target.setDominationRank(tempRank);
 
-                if (target.equals(alphaMale)) {
-                    Werewolf newAlphaFemale = findAlphaFemale();
-                    alphaFemale = newAlphaFemale;
+        System.out.println(aggressor.getGender() + " " + aggressor.getDominationRank()
+                + " a accompli la domination sur " + target.getGender() + " " + target.getDominationRank());
+    }
+    private static final int DOMINATION_THRESHOLD = 5;
+
+    private void increaseDominationFactor(Werewolf werewolf) {
+        if (werewolf.getDominationRank() != 'ω' && !werewolf.getGender().equals("α")) {
+            if (werewolf.getLevel() > DOMINATION_THRESHOLD || werewolf.getDominationRank() == 'ω') {
+                werewolf.setDominationRank(werewolf.getDominationRank() + 1);
+                System.out.println(werewolf.getGender() + " " + werewolf.getDominationRank()
+                        + " a augmenté son facteur de domination.");
+                if (werewolf.getDominationRank() == 'ω') {
                 }
-
-                break;
+            } else {
+                showAggression(werewolf, werewolf);
             }
         }
-    }
-
-    private Werewolf findAlphaFemale() {
-        Werewolf newAlphaFemale = alphaFemale;
-        for (Werewolf member : members) {
-            if (member != alphaMale && member != alphaFemale && member.getGender().equals("femelle")
-                    && member.getStrength() > newAlphaFemale.getStrength()) {
-                newAlphaFemale = member;
-            }
-        }
-        return newAlphaFemale;
     }
 }
+

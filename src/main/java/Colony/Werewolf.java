@@ -1,4 +1,5 @@
 package Colony;
+
 public class Werewolf {
     public enum AgeCategory {
         YOUNG,
@@ -14,12 +15,43 @@ public class Werewolf {
     private int level;
     private double impulsivenessFactor;
     private String pack;
-    private Werewolf alphaMale;
-    private Werewolf alphaFemale;
-    private boolean isAlphaCouple;
-    private boolean isSolitary;
-    private int numberOfOffspring;
-    private boolean isOmega;
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setAgeCategory(AgeCategory ageCategory) {
+        this.ageCategory = ageCategory;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public void setDominationExerted(int dominationExerted) {
+        this.dominationExerted = dominationExerted;
+    }
+
+    public void setDominationSuffered(int dominationSuffered) {
+        this.dominationSuffered = dominationSuffered;
+    }
+
+    public void setDominationRank(int dominationRank) {
+        this.dominationRank = dominationRank;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setImpulsivenessFactor(double impulsivenessFactor) {
+        this.impulsivenessFactor = impulsivenessFactor;
+    }
+
+    public void setPack(String pack) {
+        this.pack = pack;
+    }
+
     public Werewolf(String gender, AgeCategory ageCategory, int strength, int dominationExerted, int dominationSuffered,
                     int dominationRank, double impulsivenessFactor, String pack) {
         this.gender = gender;
@@ -31,38 +63,9 @@ public class Werewolf {
         this.impulsivenessFactor = impulsivenessFactor;
         this.pack = pack;
         this.level = calculateLevel();
-        this.isSolitary = false;
-        this.isAlphaCouple = false;
-        this.numberOfOffspring = 0;
-        this.isOmega = false;
-        if (pack.equals("AlphaMale")) {
-            this.gender = "male_alpha";
-        } else if (pack.equals("AlphaFemale")) {
-            this.gender = "female_alpha";
-        }
     }
     private int calculateLevel() {
-        int ageCategoryMultiplier = 0;
-
-        switch (ageCategory) {
-            case YOUNG:
-                ageCategoryMultiplier = 1;
-                break;
-            case ADULT:
-                ageCategoryMultiplier = 3; //J'ai mis 3 ici car un adulte a le plus de puissance
-                break;
-            case OLD:
-                ageCategoryMultiplier = 2;
-                break;
-        }
-// AUTRE METHODE SANS UTILISER DE MULTIPLICATEUR
-//        if (ageCategory == AgeCategory.YOUNG) {
-//            level -= 10;  // Force plus faible pour les jeunes
-//        } else if (ageCategory == AgeCategory.OLD) {
-//            level -= 5;   // Force plus faible pour les vieux
-//        }
-
-        return (strength + dominationExerted + dominationSuffered) * ageCategoryMultiplier;
+        return 0;
     }
 
     public String getGender() {
@@ -89,100 +92,13 @@ public class Werewolf {
         return dominationRank;
     }
 
-    public void increaseDominationRank() {
-        dominationRank++;
-    }
-
-    public boolean isSolitary() {
-        return isSolitary;
-    }
-
-    public void becomeSolitary() {
-        isSolitary = true;
-    }
-
-    public void joinPack() {
-        isSolitary = false;
-    }
-
-    public boolean isAlphaCouple() {
-        return isAlphaCouple;
-    }
-
-    public void becomeAlphaCouple() {
-        isAlphaCouple = true;
-    }
-
-    public int getNumberOfOffspring() {
-        return numberOfOffspring;
-    }
-
-    public void reproduce() {
-        if (isAlphaCouple && numberOfOffspring < 7) {
-            int numberOfNewOffspring = (int) (Math.random() * 7) + 1;
-            numberOfOffspring += numberOfNewOffspring;
-            System.out.println("The alpha couple has produced " + numberOfNewOffspring + " offspring!");
-        }
-    }
-
-    public void exchangeRanks(Werewolf other) {
-        int tempRank = other.getDominationRank();
-        other.setDominationRank(this.getDominationRank());
-        this.setDominationRank(tempRank);
-    }
-
-    public void decreaseDominationRank() {
-        dominationRank = Math.max(dominationRank - 1, 1);
-    }
-
-    public void setDominationRank(int newRank) {
-        dominationRank = newRank;
-    }
-
-    public boolean isAlphaMale() {
-        return gender.equals("male_alpha");
-    }
-
-    public boolean isAlphaFemale() {
-        return gender.equals("female_alpha");
-    }
-
     public int getLevel() {
         return level;
-    }
-
-    public boolean isOmega() {
-        return isOmega;
     }
 
     public double getImpulsivenessFactor() {
         return impulsivenessFactor;
     }
-
-    public void howl()  {
-        System.out.println("Awooooo");
-    }
-
-    public void hearHowl() {
-        if (!isSleeping() && !isSick()) {
-            System.out.println("Les Loup Garou ecoute les hurlements");
-        } else {
-            System.out.println("Le Loup Garou n'ecoute pas les hurlements car soit il dort ou soit il est malade ");
-        }
-    }
-
-    public void transformIntoHuman() {
-        System.out.println("Le Loup Garou se transforme en humain");
-    }
-
-    private boolean isSleeping() {
-        return false;
-    }
-
-    private boolean isSick() {
-        return false;
-    }
-
 
     public String getPack() {
         return pack;
@@ -199,32 +115,18 @@ public class Werewolf {
         System.out.println("Facteur d'Impétuosité : " + impulsivenessFactor);
         System.out.println("Meute : " + pack);
     }
-    public void formAlphaCouple(Werewolf potentialAlphaMale, Werewolf potentialAlphaFemale) {
-        if (potentialAlphaMale.getGender().equals("male") && potentialAlphaMale.getAgeCategory() == AgeCategory.ADULT &&
-                potentialAlphaFemale.getGender().equals("female") && potentialAlphaFemale.getAgeCategory() == AgeCategory.ADULT) {
-            if (alphaMale == null || potentialAlphaMale.getStrength() > alphaMale.getStrength()) {
-                alphaMale = potentialAlphaMale;
-                alphaFemale = potentialAlphaFemale;
-            }
-        }
+    public String shout() {
+        return String.format("Miaou");
     }
-    public void removeAlphaCouple() {
-        if (isAlphaMale()) {
-            alphaMale = null;
-        } else if (isAlphaFemale()) {
-            alphaFemale = null;
-        }
+    public void hearShout(String shout) {
+        System.out.println("Le loup garou entends un miaulement: " + shout);
     }
-    public void decreaseDominationRankNaturally() {
-        if (!isAlphaMale() && !isAlphaFemale()) {
-            dominationRank = Math.max(dominationRank - 1, 1);
-        }
+    public void leavePack() {
+        System.out.println("Le loup garou a quitté la meute.");
+        this.pack = "Solitaire";
     }
-    public void declareOmega() {
-        if (!isAlphaMale() && !isAlphaFemale()) {
-            if (getStrength() < calculateLevel() / 2) {
-                isOmega = true;
-            }
-        }
+    public void transformToHuman() {
+        System.out.println("The werewolf transforms into a human.");
+        // Add any additional logic for the transformation
     }
 }
