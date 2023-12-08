@@ -1,7 +1,10 @@
 package FantasticZoo.models;
 import FantasticZoo.models.creatures.Creature;
+import FantasticZoo.models.creatures.Egg;
 import FantasticZoo.models.creatures.Gender;
 import FantasticZoo.models.enclosures.Enclosure;
+
+import java.util.ArrayList;
 
 public class Master {
     private static Master master;

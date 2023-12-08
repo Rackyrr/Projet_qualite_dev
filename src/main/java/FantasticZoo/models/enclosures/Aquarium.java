@@ -1,6 +1,7 @@
 package FantasticZoo.models.enclosures;
 
 import FantasticZoo.models.creatures.Creature;
+import FantasticZoo.models.creatures.IFlying;
 import FantasticZoo.models.creatures.ISwimming;
 
 public class Aquarium extends Enclosure{

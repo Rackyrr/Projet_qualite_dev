@@ -6,6 +6,7 @@ import FantasticZoo.controls.Command;
 import FantasticZoo.models.creatures.Gender;
 import FantasticZoo.views.Menu;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
 public class Game implements Menu {
@@ -13,14 +14,28 @@ public class Game implements Menu {
     private static Zoo zoo;
     private static Command command;
 
-    public static void main(String[] args) throws NoSuchMethodException {
+    public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         SetupGame();
+        while (!command.isExitCommand()){
+            WaitForCommand();
+        }
+    }
+
+    public static void WaitForCommand() throws InvocationTargetException, IllegalAccessException {
+        Menu.promptMenu();
+        Scanner sc = new Scanner(System.in);
+        do {
+            String[] userCommand = sc.nextLine().split(" ");
+            if (command.processCommand(userCommand))
+                break;
+        }while (true);
     }
 
     public static void SetupGame() throws NoSuchMethodException {
         CreationMaster();
         CreationZoo();
         command = Command.getCommand(master, zoo);
+        Menu.Intro(master);
     }
 
     public static void CreationMaster(){

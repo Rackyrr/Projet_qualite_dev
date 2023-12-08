@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Command implements Menu {
     private static Command command;
@@ -18,8 +19,14 @@ public class Command implements Menu {
     private Master master;
     private Zoo zoo;
 
+    private boolean ExitCommand;
+
     public Map<String, Method> getCommands() {
         return commands;
+    }
+
+    public boolean isExitCommand() {
+        return ExitCommand;
     }
 
     private Command(Master master, Zoo zoo) throws NoSuchMethodException {
@@ -29,8 +36,10 @@ public class Command implements Menu {
         commands.put("transfer", Command.class.getMethod("transfer"));
         commands.put("rename", Command.class.getMethod("rename"));
         commands.put("help", Command.class.getMethod("help"));
+        commands.put("exit", Command.class.getMethod("exit"));
         this.zoo = zoo;
         this.master = master;
+        this.ExitCommand = false;
     }
 
     public static Command getCommand(Master master, Zoo zoo) throws NoSuchMethodException {
@@ -40,14 +49,15 @@ public class Command implements Menu {
         return command;
     }
 
-    public void processCommand(String[] userCommand) throws InvocationTargetException, IllegalAccessException {
+    public boolean processCommand(String[] userCommand) throws InvocationTargetException, IllegalAccessException {
         if (commands.containsKey(userCommand[0])){
             UserCommand = userCommand;
-            commands.get(userCommand[0]).invoke(null);
+            commands.get(userCommand[0]).invoke(command);
+            return true;
         }
         else {
-            System.out.println("Cette commande n'existe pas. \n" +
-                    "Tapez List_command pour avoir toutes les commandes disponibles");
+            Menu.commandNotFound();
+            return false;
         }
     }
 
@@ -204,6 +214,17 @@ public class Command implements Menu {
         }
         else {
             Menu.ShowCommandList();
+        }
+    }
+
+    //Permet de quitter le jeu :
+    public void exit() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Êtes vous sûr de vouloir quitter ? \n" +
+                "Votre progression ne sera pas sauvergardée (Y/N)");
+        String answer = sc.nextLine();
+        if (answer.equalsIgnoreCase("Y")) {
+            ExitCommand = true;
         }
     }
 
