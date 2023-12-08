@@ -16,7 +16,7 @@ public class Werewolf {
     private String pack;
     private Werewolf alphaMale;
     private Werewolf alphaFemale;
-    //private boolean isAlphaCouple;
+    private boolean isAlphaCouple;
     private boolean isSolitary;
     private int numberOfOffspring;
     private boolean isOmega;
@@ -32,7 +32,7 @@ public class Werewolf {
         this.pack = pack;
         this.level = calculateLevel();
         this.isSolitary = false;
-        //this.isAlphaCouple = false;
+        this.isAlphaCouple = false;
         this.numberOfOffspring = 0;
         this.isOmega = false;
         if (pack.equals("AlphaMale")) {
@@ -105,25 +105,25 @@ public class Werewolf {
         isSolitary = false;
     }
 
-//    public boolean isAlphaCouple() {
-//        return isAlphaCouple;
-//    }
-//
-//    public void becomeAlphaCouple() {
-//        isAlphaCouple = true;
-//    }
-//
-//    public int getNumberOfOffspring() {
-//        return numberOfOffspring;
-//    }
+    public boolean isAlphaCouple() {
+        return isAlphaCouple;
+    }
 
-//    public void reproduce() {
-//        if (isAlphaCouple && numberOfOffspring < 7) {
-//            int numberOfNewOffspring = (int) (Math.random() * 7) + 1;
-//            numberOfOffspring += numberOfNewOffspring;
-//            System.out.println("The alpha couple has produced " + numberOfNewOffspring + " offspring!");
-//        }
-//    }
+    public void becomeAlphaCouple() {
+        isAlphaCouple = true;
+    }
+
+    public int getNumberOfOffspring() {
+        return numberOfOffspring;
+    }
+
+    public void reproduce() {
+        if (isAlphaCouple && numberOfOffspring < 7) {
+            int numberOfNewOffspring = (int) (Math.random() * 7) + 1;
+            numberOfOffspring += numberOfNewOffspring;
+            System.out.println("The alpha couple has produced " + numberOfNewOffspring + " offspring!");
+        }
+    }
 
     public void exchangeRanks(Werewolf other) {
         int tempRank = other.getDominationRank();
@@ -205,6 +205,25 @@ public class Werewolf {
             if (alphaMale == null || potentialAlphaMale.getStrength() > alphaMale.getStrength()) {
                 alphaMale = potentialAlphaMale;
                 alphaFemale = potentialAlphaFemale;
+            }
+        }
+    }
+    public void removeAlphaCouple() {
+        if (isAlphaMale()) {
+            alphaMale = null;
+        } else if (isAlphaFemale()) {
+            alphaFemale = null;
+        }
+    }
+    public void decreaseDominationRankNaturally() {
+        if (!isAlphaMale() && !isAlphaFemale()) {
+            dominationRank = Math.max(dominationRank - 1, 1);
+        }
+    }
+    public void declareOmega() {
+        if (!isAlphaMale() && !isAlphaFemale()) {
+            if (getStrength() < calculateLevel() / 2) {
+                isOmega = true;
             }
         }
     }
