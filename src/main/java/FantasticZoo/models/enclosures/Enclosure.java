@@ -6,6 +6,7 @@ import FantasticZoo.models.items.Food;
 import FantasticZoo.models.creatures.Viviparous;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Enclosure implements Runnable {
@@ -14,7 +15,7 @@ public class Enclosure implements Runnable {
     private double area;
     private final static int MAX_AREA = 100;
     private CleanlinessLevel cleanlinessLevel = CleanlinessLevel.DECENT;
-    private final static int MAXIMUM_CREATURES = 15;
+    private final int MAXIMUM_CREATURES;
     private ArrayList<Creature> creatures;
     private ArrayList<Egg> eggs;
 
@@ -73,14 +74,18 @@ public class Enclosure implements Runnable {
         this.area = area;
         this.creatures = new ArrayList<>(MAXIMUM_CREATURES);
         this.eggs = new ArrayList<>(MAXIMUM_CREATURES);
+        this.MAXIMUM_CREATURES = MAXIMUM_CREATURES;
     }
     public Enclosure(Class AUTHORIZED_ANIMAL, String name) {
         this.AUTHORIZED_ANIMAL = AUTHORIZED_ANIMAL;
         this.name = name;
         this.area = (int) (Math.random() * MAX_AREA);
+        this.MAXIMUM_CREATURES = 15;
         this.creatures = new ArrayList<>(MAXIMUM_CREATURES);
         this.eggs = new ArrayList<>(MAXIMUM_CREATURES);
     }
+
+
 
     //A modifier pour afficher les caractèristiques des créatures de l'enclos
     //Modifier aussi pour que ce soit mieux pour l'utilisateur
@@ -246,9 +251,23 @@ public class Enclosure implements Runnable {
 
     @Override
     public void run() {
-        Iterator<Creature> c = creatures.iterator();
+        Creature[] cArray = creatures.toArray(new Creature[0]);
+        Iterator<Creature> c = Arrays.stream(cArray).iterator();
         while (c.hasNext()){
-            c.next().run();
+            Creature creature = c.next();
+            creature.run();
+            if (creature.isDead()) {
+                System.out.println(String.format("%s est mort !",creature.getName()));
+                RemoveCreature(creature);
+            } else {
+                if (creature.getHunger().getState()) System.out.println(String.format("%s dans l'enclos %s a faim ! Nourrissez-le !", creature.getName(),getName()));
+                if (creature.getSleep().getState()) System.out.println(String.format("%s dans l'enclos %s dort !", creature.getName(),getName()));
+            }
+        }
+        Egg[] eArray = eggs.toArray(new Egg[0]);
+        Iterator<Egg> e = Arrays.stream(eArray).iterator();
+        while (e.hasNext()){
+            e.next().run();
         }
     }
 }

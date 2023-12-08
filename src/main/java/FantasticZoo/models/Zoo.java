@@ -1,7 +1,11 @@
 package FantasticZoo.models;
 
+import FantasticZoo.models.creatures.Creature;
+import FantasticZoo.models.creatures.Werewolf;
 import FantasticZoo.models.enclosures.Enclosure;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
 public class Zoo {
     private static Zoo zoo;
@@ -36,6 +40,16 @@ public class Zoo {
         }
         System.out.println("Nombres de créatures presentent dans le Zoo fantastique : " + totalZooCreature);
 
+    }
+
+    public ArrayList<Thread> getEnclosuresThreads(){
+        ArrayList<Thread> threads = new ArrayList<>(enclosurelist.size());
+        Enclosure[] eArray = enclosurelist.toArray(new Enclosure[0]);
+        Iterator<Enclosure> e = Arrays.stream(eArray).iterator();
+        while (e.hasNext()) {
+            threads.add(new Thread(e.next()));
+        }
+        return threads;
     }
 
     public void displayEnclosureAllCreature(){
