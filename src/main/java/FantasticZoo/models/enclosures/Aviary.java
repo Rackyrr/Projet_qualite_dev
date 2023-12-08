@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Aviary extends Enclosure {
     private double Height;
+    private final static int MAX_HEIGHT = 250;
     private CleanlinessLevel CleanLevelRoof;
 
     public double getHeight() {
@@ -25,9 +26,9 @@ public class Aviary extends Enclosure {
         CleanLevelRoof = cleanLevelRoof;
     }
 
-    public Aviary(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES, double Height) {
-        super(AUTHORIZED_ANIMAL, name, area, MAXIMUM_CREATURES);
-        this.Height = Height;
+    public Aviary(Class AUTHORIZED_ANIMAL, String name) {
+        super(AUTHORIZED_ANIMAL, name);
+        this.Height = (int) (Math.random()*MAX_HEIGHT);
         this.setCreatures(new ArrayList<>(this.getMAXIMUM_CREATURES()));
         this.setEggs(new ArrayList<>(this.getMAXIMUM_CREATURES()));
     }

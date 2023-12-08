@@ -43,4 +43,13 @@ public abstract class Oviparous extends Creature{
             return egg;
         return null;
     }
+
+    @Override
+    public void run() {
+        super.run();
+        if(!getSleep().getState() && Math.random() <= 0.1){
+            Oviparous mate = (Oviparous) getActualEnclosure().getRandomCreatureInEnclosure();
+            if(mate != null) reproduce(mate);
+        }
+    }
 }

@@ -2,8 +2,10 @@ package FantasticZoo.views;
 
 import FantasticZoo.controls.Command;
 import FantasticZoo.models.Master;
+import FantasticZoo.models.Zoo;
 import FantasticZoo.models.enclosures.Aquarium;
 import FantasticZoo.models.enclosures.CleanlinessLevel;
+import FantasticZoo.models.enclosures.Enclosure;
 
 import java.util.Scanner;
 
@@ -24,7 +26,7 @@ public interface Menu {
 
     public static void commandNotFound(){
         System.out.println("Cette commande n'existe pas. \n" +
-                "Tapez List_command pour avoir toutes les commandes disponibles");
+                "Tapez help pour avoir toutes les commandes disponibles");
     }
 
     public static void enclosureNotFound(String enclosureName) {
@@ -120,6 +122,12 @@ public interface Menu {
                         -rename : Pour renommer une créature ou un enclos
                             Utilisation : rename <NomCreatureActuel> <NouveauNom>
                             
+                        -store : Pour afficher les articles que l'on peut acheter
+                            Utilisation : store
+                            
+                        -buy : Pour acheter des articles
+                            Utilisation : buy <CreatureOuEnclos>
+                            
                         -exit : Pour quitter l'application
                             Utilisation : exit
                             
@@ -162,5 +170,65 @@ public interface Menu {
                 " créatures prospèrent dans ce monde fantastique.");
         System.out.println("Que l'aventure commence !");
         System.out.println("========================================");
+    }
+
+    public static void NoEnclosure(){
+        System.out.println("Vous n'avez pas encore d'enclos, mais vous pourrez en obtenir en utilisant store.");
+    }
+
+    public static void ShowStore(){
+        System.out.println(
+                """
+                        Voici les articles disponibles dans le magasin :
+                                                
+                                        =====Enclos=====
+
+                        -Enclos basique (enclosure)
+                        -Aquarium (aquarium)
+                        -Volière (aviary)
+                        
+                                       =====Creature=====
+                        
+                        Ovipares :
+                            -Kraken (Kraken)
+                            -Mégalodon (Megalodon)
+                            -Phénix (Phenix)
+                            -Dragon (Dragon)
+                        Vivipares :
+                            -Loup-garou (Werewolf)
+                            -Licorne (Unicorn)
+                            -Nymphes (Nymph)
+                            -Sirènes (Siren)
+                        
+                        Pour acheter un article, faites buy <NomArticleParenthèses>
+                        """);
+    }
+
+    public static void Buying(int etape, boolean IsCreature){
+        if (IsCreature){
+            if (etape == 1){
+                System.out.println("Comment voulez vous nommez votre nouvelle créature ?");
+            }
+            else if (etape == 2){
+                System.out.println("Quelle est le sexe de votre nouvelle créature ?");
+            }
+            else if (etape == 3){
+                System.out.println("Dans enclos voulez vous le mettre ?");
+            }
+        }
+        else {
+            if (etape == 1){
+                System.out.println("Comment voulez vous le nommez ?");
+            }
+            else if (etape == 2){
+                System.out.println("Quels Crétures voudrez vous mettre dedans ?");
+            }
+        }
+    }
+
+    public static void AllEnclosure(Zoo zoo){
+        for (Enclosure enclosure : zoo.getEnclosurelist()) {
+            System.out.println(enclosure.getName());
+        }
     }
 }

@@ -72,4 +72,14 @@ public class ViviparousTest {
         werewolfman.reproduce(werewolfwoman);
         assertTrue(werewolfwoman.isPregnant());
     }
+
+    @Test
+    void run(){
+        Werewolf werewolfwoman = new Werewolf("Lougarouwoman",95,186,0,150,5,120,8,
+                150,75,false,Gender.FEMALE,mockEnclosure,9);
+        when(mockEnclosure.getRandomCreatureInEnclosure()).thenReturn(werewolfwoman);
+        werewolfwoman.run();
+        assertEquals(1,werewolfwoman.getAge());
+        assertEquals(145,werewolfwoman.getHunger().getActualValue());
+    }
 }

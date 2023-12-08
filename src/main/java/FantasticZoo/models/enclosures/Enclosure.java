@@ -6,13 +6,15 @@ import FantasticZoo.models.items.Food;
 import FantasticZoo.models.creatures.Viviparous;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Enclosure {
+public class Enclosure implements Runnable {
     private final Class AUTHORIZED_ANIMAL;
     private String name;
     private double area;
+    private final static int MAX_AREA = 100;
     private CleanlinessLevel cleanlinessLevel = CleanlinessLevel.DECENT;
-    private final int MAXIMUM_CREATURES;
+    private final static int MAXIMUM_CREATURES = 15;
     private ArrayList<Creature> creatures;
     private ArrayList<Egg> eggs;
 
@@ -65,13 +67,12 @@ public class Enclosure {
     }
 
     //Modifier constructeur pour mettre degré de propreté par défaut
-    public Enclosure(Class AUTHORIZED_ANIMAL, String name, double area, int MAXIMUM_CREATURES) {
+    public Enclosure(Class AUTHORIZED_ANIMAL, String name) {
         this.AUTHORIZED_ANIMAL = AUTHORIZED_ANIMAL;
         this.name = name;
-        this.area = area;
-        this.MAXIMUM_CREATURES = MAXIMUM_CREATURES;
-        this.creatures = new ArrayList<>(this.MAXIMUM_CREATURES);
-        this.eggs = new ArrayList<>(this.MAXIMUM_CREATURES);
+        this.area = (int) (Math.random() * MAX_AREA);
+        this.creatures = new ArrayList<>(MAXIMUM_CREATURES);
+        this.eggs = new ArrayList<>(MAXIMUM_CREATURES);
     }
 
     //A modifier pour afficher les caractèristiques des créatures de l'enclos
@@ -227,6 +228,20 @@ public class Enclosure {
             }
             cleanlinessLevel = CleanlinessLevel.GREAT;
             System.out.println("L'enclos a été nettoyé, il est maintenant dans un très bon état.");
+        }
+    }
+
+    public Creature getRandomCreatureInEnclosure(){
+        if (creatures.size() == 0) return null;
+        int randomIndex = (int) (Math.random() * creatures.size());
+        return creatures.get(randomIndex);
+    }
+
+    @Override
+    public void run() {
+        Iterator<Creature> c = creatures.iterator();
+        while (c.hasNext()){
+            c.next().run();
         }
     }
 }

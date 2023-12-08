@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class OviparousTest {
     private Enclosure mockEnclosure = mock(Enclosure.class);
@@ -36,5 +37,11 @@ public class OviparousTest {
         assertTrue(dragonman.canMateWith(dragonwoman));
     }
 
-
+    @Test
+    void run(){
+        Dragon dragon = new Dragon("Dragon",95,186,0,150,5,120,8, 150,1,false,Gender.MALE,mockEnclosure);
+        when(mockEnclosure.getRandomCreatureInEnclosure()).thenReturn(dragon);
+        dragon.run();
+        assertEquals(dragon.getAge(),dragon.getNATURAL_DEATH_AGE());
+    }
 }
