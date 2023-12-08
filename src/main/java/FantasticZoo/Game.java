@@ -17,13 +17,13 @@ public class Game implements Menu {
 
     public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         SetupGame();
+        Menu.promptMenu();
         while (!command.isExitCommand()){
             WaitForCommand();
         }
     }
 
     public static void WaitForCommand() throws InvocationTargetException, IllegalAccessException {
-        Menu.promptMenu();
         Scanner sc = new Scanner(System.in);
         do {
             String[] userCommand = sc.nextLine().split(" ");

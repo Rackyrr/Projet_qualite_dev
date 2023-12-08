@@ -2,12 +2,16 @@ package FantasticZoo.controls;
 
 import FantasticZoo.models.Master;
 import FantasticZoo.models.Zoo;
-import FantasticZoo.models.creatures.Creature;
+import FantasticZoo.models.creatures.*;
+import FantasticZoo.models.enclosures.Aquarium;
+import FantasticZoo.models.enclosures.Aviary;
 import FantasticZoo.models.enclosures.Enclosure;
 import FantasticZoo.views.Menu;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,7 +22,8 @@ public class Command implements Menu {
     private String[] UserCommand;
     private Master master;
     private Zoo zoo;
-
+    private Scanner scan;
+    private ArrayList<Class> BuyClass;
     private boolean ExitCommand;
 
     public Map<String, Method> getCommands() {
@@ -30,16 +35,34 @@ public class Command implements Menu {
     }
 
     private Command(Master master, Zoo zoo) throws NoSuchMethodException {
+        //ajout des commandes dans l'arrayList
         commands.put("check", Command.class.getMethod("check"));
         commands.put("clean", Command.class.getMethod("clean"));
         commands.put("feed", Command.class.getMethod("feed"));
         commands.put("transfer", Command.class.getMethod("transfer"));
         commands.put("rename", Command.class.getMethod("rename"));
         commands.put("help", Command.class.getMethod("help"));
+        commands.put("store", Command.class.getMethod("store"));
+        commands.put("buy", Command.class.getMethod("buy"));
         commands.put("exit", Command.class.getMethod("exit"));
         this.zoo = zoo;
         this.master = master;
         this.ExitCommand = false;
+        this.scan = new Scanner(System.in);
+        //Ajout de toutes les classes dans l'arraylist BuyClass
+        BuyClass = new ArrayList<>();
+        BuyClass.add(Enclosure.class);
+        BuyClass.add(Aviary.class);
+        BuyClass.add(Aquarium.class);
+        BuyClass.add(Dragon.class);
+        BuyClass.add(Kraken.class);
+        BuyClass.add(Megalodon.class);
+        BuyClass.add(Nymph.class);
+        BuyClass.add(Phoenix.class);
+        BuyClass.add(Siren.class);
+        BuyClass.add(Unicorn.class);
+        BuyClass.add(Werewolf.class);
+
     }
 
     public static Command getCommand(Master master, Zoo zoo) throws NoSuchMethodException {
@@ -65,9 +88,17 @@ public class Command implements Menu {
     //Commande utilisateur : check {nomEnclos}
     public void check(){
         if (UserCommand.length == 1){
-            System.out.print("Quel enclos voulez vous examiner ?");
+            System.out.print("Quel enclos voulez vous examiner ? \n");
         }
-        if (UserCommand.length == 2){
+        else if (UserCommand.length == 2){
+            if (UserCommand[1].equalsIgnoreCase("all")){
+                if (zoo.getEnclosurelist().isEmpty()){
+                    Menu.NoEnclosure();
+                }
+                for (Enclosure enclosure : zoo.getEnclosurelist()){
+                    System.out.println(enclosure.getName());
+                }
+            }
             for (Enclosure enclosure : zoo.getEnclosurelist()){
                 if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
                     master.examineEnclosure(enclosure);
@@ -88,7 +119,7 @@ public class Command implements Menu {
         if (UserCommand.length == 1){
             Menu.cleanEnclosureMessage();
         }
-        if (UserCommand.length == 2){
+        else if (UserCommand.length == 2){
             for (Enclosure enclosure : zoo.getEnclosurelist()){
                 if (enclosure.getName().equalsIgnoreCase(UserCommand[1])){
                     master.cleanEnclosure(enclosure);
@@ -219,13 +250,108 @@ public class Command implements Menu {
 
     //Permet de quitter le jeu :
     public void exit() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Êtes vous sûr de vouloir quitter ? \n" +
                 "Votre progression ne sera pas sauvergardée (Y/N)");
-        String answer = sc.nextLine();
+        String answer = scan.nextLine();
         if (answer.equalsIgnoreCase("Y")) {
             ExitCommand = true;
         }
     }
 
+    public void store(){
+        if (UserCommand.length == 1){
+            Menu.ShowStore();
+        }
+        else {
+            Menu.typo();
+        }
+    }
+
+
+    public void buy() throws InvocationTargetException, InstantiationException, IllegalAccessException {
+        boolean CommandItemFound = false;
+        if (UserCommand.length == 2) {
+            for (Class item : BuyClass){
+                if (UserCommand[1].equalsIgnoreCase(item.getSimpleName())){
+                    Menu.Buying(1, Creature.class.isAssignableFrom(item));
+                    String nameObject = scan.nextLine();
+                    if (Creature.class.isAssignableFrom(item)){
+                        if (!zoo.getEnclosurelist().isEmpty()){
+                            Menu.Buying(2, Creature.class.isAssignableFrom(item));
+                            Gender gender;
+                            do {
+                                String GenderStr = scan.nextLine();
+                                if (GenderStr.equalsIgnoreCase("h")){
+                                    gender = Gender.MALE;
+                                    break;
+                                }
+                                else if (GenderStr.equalsIgnoreCase("f")) {
+                                    gender = Gender.FEMALE;
+                                    break;
+                                }
+                                else
+                                    Menu.CreateMaster(-3);
+                            } while (true);
+                            Menu.Buying(3, Creature.class.isAssignableFrom(item));
+                            Menu.AllEnclosure(zoo);
+                            boolean IsFound = false;
+                            while (!IsFound){
+                                String EnclosName = scan.nextLine();
+                                for (Enclosure enclosure : zoo.getEnclosurelist()){
+                                    if (EnclosName.equalsIgnoreCase(enclosure.getName())){
+                                        try {
+                                            Constructor constructor = item.getDeclaredConstructor(Enclosure.class,Gender.class, String.class);
+                                            Creature newCreature = (Creature) constructor.newInstance(enclosure, gender, nameObject);
+                                            enclosure.AddCreature(newCreature);
+                                            System.out.println("Vous avez bien acheté la créature " + newCreature.getName()
+                                                    + " qui est " + newCreature.getClass().getName());
+                                            CommandItemFound = true;
+                                            IsFound = true;
+                                        } catch (NoSuchMethodException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            System.out.println("Vous n'avez pas encore d'enclos où mettre vos créatures.");
+                        }
+                    }
+                    else if (!Creature.class.isAssignableFrom(item)){
+                        Menu.Buying(2,Creature.class.isAssignableFrom(item));
+                        String NomCreature = scan.nextLine();
+                        for (Class classs : BuyClass){
+                            if (classs.getSimpleName().equalsIgnoreCase("Enclosure")
+                                    || classs.getSimpleName().equalsIgnoreCase("Aquarium")
+                                    || classs.getSimpleName().equalsIgnoreCase("Aviary")){
+                                continue;
+                            }
+                            else {
+                                if (classs.getSimpleName().equalsIgnoreCase(NomCreature)){
+                                    try {
+                                        Constructor constructor = item.getDeclaredConstructor(Class.class, String.class);
+                                        Enclosure newEnclosure = (Enclosure) constructor.newInstance(classs, nameObject);
+                                        zoo.getEnclosurelist().add(newEnclosure);
+                                        System.out.println("Vous avez bien acheté l'enclos " + newEnclosure.getName()
+                                                + " qui contient des " + newEnclosure.getAUTHORIZED_ANIMAL().getSimpleName());
+                                        CommandItemFound = true;
+                                    } catch (NoSuchMethodException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            if (!CommandItemFound){
+                System.out.println("Ce que vous voulez acheter n'existe pas");
+            }
+        }
+        else {
+            Menu.typo();
+        }
+    }
 }
