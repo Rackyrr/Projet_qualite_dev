@@ -61,6 +61,15 @@ public class Phoenix extends Oviparous implements IFlying, IRebirth{
     }
 
     @Override
+    public void getReborn() {
+        setHunger(new HungerIndicator(NEEDMAXVALUE,NEEDRATE));
+        setSleep(new SleepIndicator(NEEDMAXVALUE,NEEDRATE));
+        setHealth(new HealthIndicator(NEEDMAXVALUE));
+        setDead(false);
+        setAge(0);
+    }
+
+    @Override
     public String shout() {
         return String.format("%s gazouille !",this.getName());
     }
@@ -68,5 +77,7 @@ public class Phoenix extends Oviparous implements IFlying, IRebirth{
     @Override
     public void run() {
         super.run();
+        if (isDead())
+            getReborn();
     }
 }

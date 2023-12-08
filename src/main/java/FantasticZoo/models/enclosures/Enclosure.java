@@ -80,7 +80,7 @@ public class Enclosure implements Runnable {
     //Modifier aussi pour que ce soit mieux pour l'utilisateur
     @Override
     public String toString() {
-        return "L'enclos " + name + "a une surface de " + area + " m², il y a " + creatures.size() + AUTHORIZED_ANIMAL
+        return "L'enclos " + name + "a une surface de " + area + " m², il y a " + creatures.size() + AUTHORIZED_ANIMAL.getSimpleName()
                 + " et " + eggs.size() + " oeufs";
     }
 

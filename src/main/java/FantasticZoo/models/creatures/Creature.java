@@ -143,6 +143,8 @@ public abstract class Creature implements Runnable {
         this.dead = dead;
     }
 
+
+
     @Override
     public void run() {
         growUp();

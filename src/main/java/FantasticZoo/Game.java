@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Game implements Menu {
     private static Master master;
+    private static int nbActionsPerTurn = 15;
     private static Zoo zoo;
     private static Command command;
 
@@ -26,8 +27,10 @@ public class Game implements Menu {
         Scanner sc = new Scanner(System.in);
         do {
             String[] userCommand = sc.nextLine().split(" ");
-            if (command.processCommand(userCommand))
+            if (command.processCommand(userCommand)) {
+                --nbActionsPerTurn;
                 break;
+            }
         }while (true);
     }
 

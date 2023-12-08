@@ -49,6 +49,16 @@ public class Nymph extends Viviparous implements IRebirth{
     }
 
     @Override
+    public void getReborn() {
+        setHunger(new HungerIndicator(NEEDMAXVALUE,NEEDRATE));
+        setSleep(new SleepIndicator(NEEDMAXVALUE,NEEDRATE));
+        setHealth(new HealthIndicator(NEEDMAXVALUE));
+        setDead(false);
+        setAge(0);
+        setPregnant(false);
+    }
+
+    @Override
     public boolean giveBirth(){
         Nymph newBorn;
         if (!getActualEnclosure().isFull()) {
@@ -67,5 +77,7 @@ public class Nymph extends Viviparous implements IRebirth{
     @Override
     public void run() {
         super.run();
+        if (isDead())
+            getReborn();
     }
 }

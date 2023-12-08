@@ -39,12 +39,12 @@ public class Siren extends Viviparous implements ISwimming{
         if (this.getGender().equals(Gender.MALE)){
             return "Cet sirène se nomme " + this.getName() + ", il pèse " + this.getWeight()
                     + " et il mesure " + this.getHeight() + ". Il a " + this.getAge()
-                    + ", et c'est un mâle. Il peut nager.";
+                    + ", et c'est un mâle. Il " + canSwim();
         }
         else if (this.getGender().equals(Gender.FEMALE)){
             return "Cette sirène se nomme " + this.getName() + ", elle pèse " + this.getWeight()
                     + " et elle mesure " + this.getHeight() + ". Elle a " + this.getAge()
-                    + ", et c'est une femele. Elle peut nager.";
+                    + ", et c'est une femele. Elle " + canSwim();
         }
         return null;
     }
