@@ -6,8 +6,9 @@ import FantasticZoo.models.items.Food;
 import FantasticZoo.models.creatures.Viviparous;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Enclosure {
+public class Enclosure implements Runnable {
     private final Class AUTHORIZED_ANIMAL;
     private String name;
     private double area;
@@ -227,6 +228,20 @@ public class Enclosure {
             }
             cleanlinessLevel = CleanlinessLevel.GREAT;
             System.out.println("L'enclos a été nettoyé, il est maintenant dans un très bon état.");
+        }
+    }
+
+    public Creature getRandomCreatureInEnclosure(){
+        if (creatures.size() == 0) return null;
+        int randomIndex = (int) (Math.random() * creatures.size());
+        return creatures.get(randomIndex);
+    }
+
+    @Override
+    public void run() {
+        Iterator<Creature> c = creatures.iterator();
+        while (c.hasNext()){
+            c.next().run();
         }
     }
 }

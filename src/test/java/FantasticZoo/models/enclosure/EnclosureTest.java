@@ -115,4 +115,15 @@ public class EnclosureTest {
         assertNotNull(newBorn);
         assertTrue(wEnclosure.getCreatures().contains(newBorn));
     }
+
+    @Test
+    void getRandomCreatureInEnclosure(){
+        Enclosure wEnclosure = new Enclosure(Phoenix.class,"Enclos des p",250,3);
+        Phoenix p1 = new Phoenix(null, Gender.MALE);
+        Phoenix p2 = new Phoenix(null, Gender.FEMALE);
+        assertTrue(wEnclosure.AddCreature(p1));
+        assertEquals(p1,wEnclosure.getRandomCreatureInEnclosure());
+        assertTrue(wEnclosure.AddCreature(p2));
+        System.out.println(wEnclosure.getRandomCreatureInEnclosure().getGender());
+    }
 }
