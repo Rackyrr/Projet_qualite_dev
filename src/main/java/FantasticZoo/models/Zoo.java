@@ -14,6 +14,7 @@ public class Zoo {
 
     private ArrayList<Enclosure> enclosurelist;
 
+
     private Zoo(String name, Master fantasticMaster, int numberMaxEnclosure) {
         this.name = name;
         this.fantasticMaster = fantasticMaster;

@@ -126,4 +126,20 @@ public class EnclosureTest {
         assertTrue(wEnclosure.AddCreature(p2));
         System.out.println(wEnclosure.getRandomCreatureInEnclosure().getGender());
     }
+
+    @Test
+    void run(){
+        assertDoesNotThrow(() -> {
+            Enclosure wEnclosure = new Enclosure(Werewolf.class,"Enclos des loup-garous",250,3);
+            Werewolf p1 = new Werewolf(null, Gender.MALE);
+            p1.setName("Chichi");
+            Werewolf p2 = new Werewolf(null, Gender.FEMALE);
+            wEnclosure.AddCreature(p1);
+            wEnclosure.AddCreature(p2);
+            for (int i = 0;i < 100;++i){
+                System.out.println(String.format("Tour %d : il y a %d créatures",i,wEnclosure.getCreatures().size()));
+                wEnclosure.run();
+            }
+        });
+    }
 }

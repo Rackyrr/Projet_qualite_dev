@@ -65,6 +65,6 @@ public class Kraken extends Oviparous implements ISwimming{
 
     @Override
     public void run() {
-
+        super.run();
     }
 }

@@ -67,6 +67,6 @@ public class Phoenix extends Oviparous implements IFlying, IRebirth{
 
     @Override
     public void run() {
-
+        super.run();
     }
 }

@@ -6,6 +6,7 @@ import FantasticZoo.models.items.Food;
 import FantasticZoo.models.creatures.Viviparous;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Enclosure implements Runnable {
@@ -239,9 +240,23 @@ public class Enclosure implements Runnable {
 
     @Override
     public void run() {
-        Iterator<Creature> c = creatures.iterator();
+        Creature[] cArray = creatures.toArray(new Creature[0]);
+        Iterator<Creature> c = Arrays.stream(cArray).iterator();
         while (c.hasNext()){
-            c.next().run();
+            Creature creature = c.next();
+            creature.run();
+            if (creature.isDead()) {
+                System.out.println(String.format("%s est mort !",creature.getName()));
+                RemoveCreature(creature);
+            } else {
+                if (creature.getHunger().getState()) System.out.println(String.format("%s dans l'enclos %s a faim ! Nourrissez-le !", creature.getName(),getName()));
+                if (creature.getSleep().getState()) System.out.println(String.format("%s dans l'enclos %s dort !", creature.getName(),getName()));
+            }
+        }
+        Egg[] eArray = eggs.toArray(new Egg[0]);
+        Iterator<Egg> e = Arrays.stream(eArray).iterator();
+        while (e.hasNext()){
+            e.next().run();
         }
     }
 }

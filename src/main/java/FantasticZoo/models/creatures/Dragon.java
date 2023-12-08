@@ -63,7 +63,7 @@ public class Dragon extends Oviparous implements IRunning, IFlying{
 
     @Override
     public void run() {
-
+        super.run();
     }
 
     @Override

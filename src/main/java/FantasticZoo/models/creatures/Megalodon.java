@@ -67,6 +67,6 @@ public class Megalodon extends Oviparous implements ISwimming{
 
     @Override
     public void run() {
-
+        super.run();
     }
 }

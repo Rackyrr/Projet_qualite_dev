@@ -67,9 +67,9 @@ public abstract class Viviparous extends Creature{
     @Override
     public void run() {
         super.run();
-        if(Math.random() <= 0.1){
+        if (!getSleep().getState() && Math.random() <= 0.1) {
             Viviparous mate = (Viviparous) getActualEnclosure().getRandomCreatureInEnclosure();
-            if(mate != null) reproduce(mate);
+            if (mate != null) reproduce(mate);
         }
         if(pregnant) refreshPregnancy();
     }
